@@ -11,6 +11,7 @@ public class Universidad {
 	private ArrayList<CicloLectivo> ciclosLectivos;
 	private ArrayList<Aula> aulas;
 	private ArrayList<Curso> cursos;
+	private ArrayList<AsignacionAlumnoCurso> asignacionesCursos;
 
 	public Universidad(String nombreUniversidad) {
 		this.nombre = nombreUniversidad;
@@ -20,6 +21,7 @@ public class Universidad {
 		this.ciclosLectivos = new ArrayList<>();
 		this.aulas = new ArrayList<>();
 		this.cursos = new ArrayList<>();
+		this.asignacionesCursos = new ArrayList<>();
 	}
 
 	public String getNombre() {
@@ -87,7 +89,7 @@ public class Universidad {
 
 	}
 
-	private Object buscarAlumnoPorDni(Integer dni) {
+	private Alumno buscarAlumnoPorDni(Integer dni) {
 		for (int i = 0; i < alumnosInscriptos.size(); i++) {
 			if (this.alumnosInscriptos.get(i).getDni().equals(dni))
 				return this.alumnosInscriptos.get(i);
@@ -224,6 +226,28 @@ public class Universidad {
 			if (i.getId().equals(idCicloLectivo))
 				return i;
 		return null;
+	}
+
+	
+
+	public Boolean inscribirAlumnoACurso(Integer idCurso, Integer dni) {
+		Alumno alumno = this.buscarAlumnoPorDni(dni);
+		Curso curso = this.buscarCursoPorId(idCurso);
+		
+		if(curso!=null && alumno!=null) {
+			AsignacionAlumnoCurso nuevaAsignacion = new AsignacionAlumnoCurso(alumno, curso);
+			return asignacionesCursos.add(nuevaAsignacion);
+		}
+		return false;
+		
+	}
+
+	private Curso buscarCursoPorId(Integer idCurso) {
+		for(Curso i: cursos)
+			if(i.getId().equals(idCurso))
+				return i;
+		return null;
+			
 	}
 
 }
