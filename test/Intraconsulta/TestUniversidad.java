@@ -30,7 +30,7 @@ public class TestUniversidad {
 		Alumno nuevoAlumno = new Alumno(dni,nombre,apellido,FechaNacimiento);
 		Boolean registroObtenido=false;
 		
-		registroObtenido = actual.registrar(nuevoAlumno);
+		registroObtenido = actual.registrarAlumno(nuevoAlumno);
 		
 		assertTrue(registroObtenido);
 		assertEquals(1,actual.getAlumnosInscriptos().size());
@@ -47,7 +47,7 @@ public class TestUniversidad {
 		Alumno nuevoAlumno = new Alumno(dni,nombre,apellido,FechaNacimiento);
 		Boolean registroObtenido=false;
 		
-		actual.registrar(nuevoAlumno);
+		actual.registrarAlumno(nuevoAlumno);
 		
 		Integer dni2 = 223;
 		String nombre2= "Lautaro";
@@ -55,7 +55,7 @@ public class TestUniversidad {
 		LocalDate FechaNacimiento2= LocalDate.parse("2001-04-10");
 		Alumno nuevoAlumno2 = new Alumno(dni2,nombre,apellido,FechaNacimiento);
 		
-		registroObtenido = actual.registrar(nuevoAlumno2);
+		registroObtenido = actual.registrarAlumno(nuevoAlumno2);
 		
 		assertTrue(registroObtenido);
 		assertEquals(2,actual.getAlumnosInscriptos().size());
@@ -75,8 +75,8 @@ public class TestUniversidad {
 		Integer dni2 = 222;
 		Alumno nuevoAlumno2 = new Alumno(dni2,nombre,apellido,FechaNacimiento);
 		
-		actual.registrar(nuevoAlumno);
-		registroObtenido = actual.registrar(nuevoAlumno2);
+		actual.registrarAlumno(nuevoAlumno);
+		registroObtenido = actual.registrarAlumno(nuevoAlumno2);
 
 		
 		assertFalse(registroObtenido);

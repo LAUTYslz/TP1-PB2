@@ -30,7 +30,6 @@ public class TestAlumno {
 		String nombre= "Lautaro";
 		String apellido= "Salazar";
 		LocalDate FechaNacimiento = LocalDate.parse("2001-04-10");
-		
 		Alumno nuevoAlumno = new Alumno(dni,nombre,apellido,FechaNacimiento);
 		nombre = "Unlam";
 		Universidad unlam = new Universidad(nombre);
@@ -49,6 +48,7 @@ public class TestAlumno {
 		String dia = "lunes";
 		String turno = "noche";
 		Curso nuevoCurso = new Curso(materia, dia, turno, nuevoCicloLectivo, aula);
+		unlam.registrarAlumno(nuevoAlumno);
 
 		unlam.agregarCurso(nuevoCurso);
 		

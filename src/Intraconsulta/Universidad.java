@@ -80,7 +80,7 @@ public class Universidad {
 		this.cursos = cursos;
 	}
 
-	public Boolean registrar(Alumno nuevoAlumno) {
+	public Boolean registrarAlumno(Alumno nuevoAlumno) {
 		if (buscarAlumnoPorDni(nuevoAlumno.getDni()) == null)
 
 			return this.alumnosInscriptos.add(nuevoAlumno);
