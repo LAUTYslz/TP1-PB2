@@ -6,15 +6,17 @@ public class Curso {
 
 	private Aula aula;
 	private CicloLectivo cicloLectivo;
-	private Horario horario;
+	private String turno;
+	private String dia;
 	private Materia materia;
 	private Integer Id;
 	private static Integer IdSiguiente =1; 
 	
 
-	public Curso(Materia materia, Horario horario, CicloLectivo nuevoCicloLectivo, Aula aula) {
+	public Curso(Materia materia,String dia ,String turno ,CicloLectivo nuevoCicloLectivo, Aula aula) {
 		this.materia = materia;
-		this.horario = horario;
+		this.dia = dia;
+		this.turno = turno;
 		this.cicloLectivo = nuevoCicloLectivo;
 		this.aula = aula;
 		this.Id=this.IdSiguiente;
@@ -52,16 +54,6 @@ public class Curso {
 	}
 
 
-	public Horario getHorario() {
-		return horario;
-	}
-
-
-	public void setHorario(Horario horario) {
-		this.horario = horario;
-	}
-
-
 	public Materia getMateria() {
 		return materia;
 	}
@@ -70,11 +62,33 @@ public class Curso {
 	public void setMateria(Materia materia) {
 		this.materia = materia;
 	}
+	
+	
+
+
+	public String getTurno() {
+		return turno;
+	}
+
+
+	public void setTurno(String turno) {
+		this.turno = turno;
+	}
+
+
+	public String getDia() {
+		return dia;
+	}
+
+
+	public void setDia(String dia) {
+		this.dia = dia;
+	}
 
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cicloLectivo, materia);
+		return Objects.hash(cicloLectivo, dia, materia, turno);
 	}
 
 
@@ -87,7 +101,16 @@ public class Curso {
 		if (getClass() != obj.getClass())
 			return false;
 		Curso other = (Curso) obj;
-		return Objects.equals(cicloLectivo, other.cicloLectivo) && Objects.equals(materia, other.materia);
+		return Objects.equals(cicloLectivo, other.cicloLectivo) && Objects.equals(dia, other.dia)
+				&& Objects.equals(materia, other.materia) && Objects.equals(turno, other.turno);
 	}
 
+
+	
+
+
+	
+
+
+	
 }
