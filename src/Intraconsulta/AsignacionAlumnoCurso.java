@@ -1,10 +1,13 @@
 package Intraconsulta;
 
+import java.util.ArrayList;
+
 public class AsignacionAlumnoCurso {
 
 	private Alumno alumno;
 	private Curso curso;
 	private Integer Id;
+	private ArrayList <Nota> notas;
 	private static Integer IdSiguiente =1; 
 
 	public AsignacionAlumnoCurso(Alumno alumno, Curso curso) {
