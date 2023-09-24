@@ -1,5 +1,6 @@
 package Intraconsulta;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Universidad {
@@ -228,26 +229,51 @@ public class Universidad {
 		return null;
 	}
 
-	
-
 	public Boolean inscribirAlumnoACurso(Integer idCurso, Integer dni) {
 		Alumno alumno = this.buscarAlumnoPorDni(dni);
 		Curso curso = this.buscarCursoPorId(idCurso);
+		ArrayList <Curso> cursosDelAlumno = this.buscarCursosDelAlumnoPorDni(dni);
 		
-		if(curso!=null && alumno!=null) {
-			AsignacionAlumnoCurso nuevaAsignacion = new AsignacionAlumnoCurso(alumno, curso);
-			return asignacionesCursos.add(nuevaAsignacion);
+		if(curso==null || alumno==null) {
+			return false;
 		}
-		return false;
+		if(LocalDate.now().isBefore(curso.getCicloLectivo().getFechaInicioInscripcion()) || LocalDate.now().isAfter(curso.getCicloLectivo().getFechaFinalizacionInscripcion())) {
+			return false;
+		}
+		if(cursosDelAlumno!=null){
+			for(Curso i: cursosDelAlumno) {
+				String dia = i.getDia();
+				String turno = i.getTurno();
+				LocalDate inicioCurso = i.getCicloLectivo().getFechaInicio();
+				LocalDate finCurso = i.getCicloLectivo().getFechaFinalizacion();
+				
+				if(dia.equals(curso.getDia())  && turno.equals(curso.getTurno()) && 
+						inicioCurso.equals(curso.getCicloLectivo().getFechaInicio()) && finCurso.equals(curso.getCicloLectivo().getFechaFinalizacion())){
+					return false;
+				}
+			}
+		}
+		AsignacionAlumnoCurso nuevaAsignacion = new AsignacionAlumnoCurso(alumno, curso);
+		return asignacionesCursos.add(nuevaAsignacion);
 		
+	}
+	
+	
+
+	private ArrayList<Curso> buscarCursosDelAlumnoPorDni(Integer dni) {
+		ArrayList<Curso> cursosAlumno = new ArrayList<>();
+		for (AsignacionAlumnoCurso i : asignacionesCursos)
+			if (i!=null && i.getAlumno().getDni().equals(dni))
+				cursosAlumno.add(i.getCurso());
+		return cursosAlumno;
 	}
 
 	private Curso buscarCursoPorId(Integer idCurso) {
-		for(Curso i: cursos)
-			if(i.getId().equals(idCurso))
+		for (Curso i : cursos)
+			if (i.getId().equals(idCurso))
 				return i;
 		return null;
-			
+
 	}
 
 }
