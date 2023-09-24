@@ -3,11 +3,11 @@ package Intraconsulta;
 public class Nota {
 
 	private Integer valor;
-	private String examen;
+	private ListaExamenes examen;
 	private Integer Id;
 	private static Integer IdSiguiente = 1;
 
-	public Nota(Integer valor, String examen) {
+	public Nota(Integer valor, ListaExamenes examen) {
 		this.valor = valor;
 		this.examen = examen;
 		this.Id = this.IdSiguiente;
@@ -22,11 +22,11 @@ public class Nota {
 		this.valor = valor;
 	}
 
-	public String getExamen() {
+	public ListaExamenes getExamen() {
 		return examen;
 	}
 
-	public void setExamen(String examen) {
+	public void setExamen(ListaExamenes examen) {
 		this.examen = examen;
 	}
 

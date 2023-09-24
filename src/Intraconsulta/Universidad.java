@@ -232,27 +232,30 @@ public class Universidad {
 	public Boolean inscribirAlumnoACurso(Integer idCurso, Integer dni) {
 		Alumno alumno = this.buscarAlumnoPorDni(dni);
 		Curso curso = this.buscarCursoPorId(idCurso);
+//		Hay que hacer un if es nulo (el curso no pertenece a la universidad)
+		ArrayList<Curso> cursosDelAlumno = this.buscarCursosDelAlumnoPorDni(dni);
+
+		if (curso == null || alumno == null) {
+			return false;
+		}
+		if (LocalDate.now().isBefore(curso.getCicloLectivo().getFechaInicioInscripcion())
+				|| LocalDate.now().isAfter(curso.getCicloLectivo().getFechaFinalizacionInscripcion())) {
+			return false;
+		}
 		Integer cantidadDeAlumnosInscriptos = curso.getAlumnosInscriptos();
-		ArrayList <Curso> cursosDelAlumno = this.buscarCursosDelAlumnoPorDni(dni);
-		
-		if(curso==null || alumno==null) {
-			return false;
-		}
-		if(LocalDate.now().isBefore(curso.getCicloLectivo().getFechaInicioInscripcion()) || LocalDate.now().isAfter(curso.getCicloLectivo().getFechaFinalizacionInscripcion())) {
-			return false;
-		}
 		if (cantidadDeAlumnosInscriptos >= curso.getAula().getCantidadDeLugares()) {
 			return false;
 		}
-		if(cursosDelAlumno!=null){
-			for(Curso i: cursosDelAlumno) {
+		if (cursosDelAlumno != null) {
+			for (Curso i : cursosDelAlumno) {
 				String dia = i.getDia();
 				String turno = i.getTurno();
 				LocalDate inicioCurso = i.getCicloLectivo().getFechaInicio();
 				LocalDate finCurso = i.getCicloLectivo().getFechaFinalizacion();
-				
-				if(dia.equals(curso.getDia())  && turno.equals(curso.getTurno()) && 
-						inicioCurso.equals(curso.getCicloLectivo().getFechaInicio()) && finCurso.equals(curso.getCicloLectivo().getFechaFinalizacion())){
+
+				if (dia.equals(curso.getDia()) && turno.equals(curso.getTurno())
+						&& inicioCurso.equals(curso.getCicloLectivo().getFechaInicio())
+						&& finCurso.equals(curso.getCicloLectivo().getFechaFinalizacion())) {
 					return false;
 				}
 			}
@@ -260,15 +263,13 @@ public class Universidad {
 		AsignacionAlumnoCurso nuevaAsignacion = new AsignacionAlumnoCurso(alumno, curso);
 		curso.sumarAlumnosInscriptos();
 		return asignacionesCursos.add(nuevaAsignacion);
-		
+
 	}
-	
-	
 
 	private ArrayList<Curso> buscarCursosDelAlumnoPorDni(Integer dni) {
 		ArrayList<Curso> cursosAlumno = new ArrayList<>();
 		for (AsignacionAlumnoCurso i : asignacionesCursos)
-			if (i!=null && i.getAlumno().getDni().equals(dni))
+			if (i != null && i.getAlumno().getDni().equals(dni))
 				cursosAlumno.add(i.getCurso());
 		return cursosAlumno;
 	}
@@ -279,6 +280,33 @@ public class Universidad {
 				return i;
 		return null;
 
+	}
+
+	public Boolean registrarNota(Integer idCurso, Integer dniAlumno, Nota notaAAsignar) {
+		Curso curso = this.buscarCursoPorId(idCurso);
+		Alumno alumno = this.buscarAlumnoPorDni(dniAlumno);
+		AsignacionAlumnoCurso asignacion = this.buscarAsignacionConCursoYAlumno(curso, alumno);
+		Boolean tieneValorValido = this.NotaTieneValorValido(notaAAsignar);
+		if(!tieneValorValido)
+			return false;
+		
+		asignacion.agregarNota(notaAAsignar);
+		return true;
+	}
+
+	private Boolean NotaTieneValorValido(Nota nota) {
+		if (nota != null)
+			if (nota.getValor() >= 1 && nota.getValor() <= 10)
+				return true;
+		return false;
+	}
+
+	private AsignacionAlumnoCurso buscarAsignacionConCursoYAlumno(Curso curso, Alumno alumno) {
+		if (curso != null && alumno != null)
+			for (AsignacionAlumnoCurso i : asignacionesCursos)
+				if (i.getCurso().equals(curso) && i.getAlumno().equals(alumno))
+					return i;
+		return null;
 	}
 
 }

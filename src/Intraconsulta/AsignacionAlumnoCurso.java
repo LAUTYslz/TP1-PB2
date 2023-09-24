@@ -15,6 +15,7 @@ public class AsignacionAlumnoCurso {
 		this.curso = curso;
 		this.Id=this.IdSiguiente;
 		this.IdSiguiente++;
+		this.notas = new ArrayList<>();
 	}
 
 	public Alumno getAlumno() {
@@ -39,6 +40,18 @@ public class AsignacionAlumnoCurso {
 
 	public void setId(Integer id) {
 		Id = id;
+	}
+
+	public ArrayList<Nota> getNotas() {
+		return notas;
+	}
+
+	public void setNotas(ArrayList<Nota> notas) {
+		this.notas = notas;
+	}
+
+	public void agregarNota(Nota notaAAsignar) {
+		this.notas.add(notaAAsignar);
 	}
 	
 }
