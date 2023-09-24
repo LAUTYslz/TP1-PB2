@@ -10,81 +10,87 @@ public class Curso {
 	private String dia;
 	private Materia materia;
 	private Integer Id;
-	private Integer alumnosInscriptos;
+	private static Integer IdSiguiente =1; 
+	
 
-	private static Integer IdSiguiente = 1;
-
-	public Curso(Materia materia, String dia, String turno, CicloLectivo nuevoCicloLectivo, Aula aula) {
+	public Curso(Materia materia,String dia ,String turno ,CicloLectivo nuevoCicloLectivo, Aula aula) {
 		this.materia = materia;
 		this.dia = dia;
 		this.turno = turno;
 		this.cicloLectivo = nuevoCicloLectivo;
 		this.aula = aula;
-		this.Id = this.IdSiguiente;
+		this.Id=this.IdSiguiente;
 		this.IdSiguiente++;
-		this.alumnosInscriptos =0;
 	}
+
 
 	public Integer getId() {
 		return Id;
 	}
 
+
 	public void setId(Integer id) {
 		Id = id;
 	}
+
 
 	public Aula getAula() {
 		return aula;
 	}
 
+
 	public void setAula(Aula aula) {
 		this.aula = aula;
 	}
+
 
 	public CicloLectivo getCicloLectivo() {
 		return cicloLectivo;
 	}
 
+
 	public void setCicloLectivo(CicloLectivo cicloLectivo) {
 		this.cicloLectivo = cicloLectivo;
 	}
+
 
 	public Materia getMateria() {
 		return materia;
 	}
 
+
 	public void setMateria(Materia materia) {
 		this.materia = materia;
 	}
+	
+	
+
 
 	public String getTurno() {
 		return turno;
 	}
 
+
 	public void setTurno(String turno) {
 		this.turno = turno;
 	}
+
 
 	public String getDia() {
 		return dia;
 	}
 
+
 	public void setDia(String dia) {
 		this.dia = dia;
 	}
 
-	public Integer getAlumnosInscriptos() {
-		return alumnosInscriptos;
-	}
-
-	public void setAlumnosInscriptos(Integer alumnosInscriptos) {
-		this.alumnosInscriptos = alumnosInscriptos;
-	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(cicloLectivo, dia, materia, turno);
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -99,8 +105,12 @@ public class Curso {
 				&& Objects.equals(materia, other.materia) && Objects.equals(turno, other.turno);
 	}
 
-	public void sumarAlumnosInscriptos() {
-		this.alumnosInscriptos=1;		
-	}
 
+	
+
+
+	
+
+
+	
 }

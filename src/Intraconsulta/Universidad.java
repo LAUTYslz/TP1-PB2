@@ -232,7 +232,6 @@ public class Universidad {
 	public Boolean inscribirAlumnoACurso(Integer idCurso, Integer dni) {
 		Alumno alumno = this.buscarAlumnoPorDni(dni);
 		Curso curso = this.buscarCursoPorId(idCurso);
-<<<<<<< Updated upstream
 		ArrayList <Curso> cursosDelAlumno = this.buscarCursosDelAlumnoPorDni(dni);
 		
 		if(curso==null || alumno==null) {
@@ -255,23 +254,8 @@ public class Universidad {
 			}
 		}
 		AsignacionAlumnoCurso nuevaAsignacion = new AsignacionAlumnoCurso(alumno, curso);
-=======
-		Integer cantidadDeAlumnosInscriptos = curso.getAlumnosInscriptos();
-
-		if (curso == null || alumno == null) {
-
-			return false;
-
-		}
-		if (cantidadDeAlumnosInscriptos >= curso.getAula().getCantidadDeLugares()) {
-			return false;
-		}
-		AsignacionAlumnoCurso nuevaAsignacion = new AsignacionAlumnoCurso(alumno, curso);
-		curso.sumarAlumnosInscriptos();
->>>>>>> Stashed changes
 		return asignacionesCursos.add(nuevaAsignacion);
 		
-
 	}
 	
 	
