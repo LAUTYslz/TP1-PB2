@@ -122,6 +122,49 @@ public class TestAlumno {
 	}
 	
 	@Test
+	public void queNoSePuedaAgregarUnAlumnoSiSuperaLaCantidadMaximaDelAula() {
+		Integer dni = 222;
+		String nombre = "Lautaro";
+		String apellido = "Salazar";
+		Integer dni2 = 111;
+		String nombre2 = "Matias";
+		String apellido2 = "Buda";
+		LocalDate FechaNacimiento = LocalDate.parse("2001-04-10");
+		Alumno lautaro = new Alumno(dni, nombre, apellido, FechaNacimiento);
+		Alumno matias = new Alumno(dni2, nombre2, apellido2, FechaNacimiento);
+		nombre = "Unlam";
+		Universidad unlam = new Universidad(nombre);
+		
+		nombre = "PB2";
+		Materia materia = new Materia(nombre);
+		unlam.registraMateria(materia);
+		
+		Integer cantidadLugares = 1;
+		Aula aula = new Aula(cantidadLugares);
+		unlam.agregarAula(aula);
+		
+		LocalDate fechaInicio = LocalDate.parse("2023-09-14");
+		LocalDate fechaFinalizacion = LocalDate.parse("2023-12-31");
+		LocalDate fechaInicioInscripcion = LocalDate.parse("2023-01-01");
+		LocalDate fechaFinalizacionInscripcion = LocalDate.parse("2023-12-31");
+		CicloLectivo nuevoCicloLectivo = new CicloLectivo(fechaInicio, fechaFinalizacion, fechaInicioInscripcion,
+				fechaFinalizacionInscripcion);
+		unlam.agregarCicloLectivo(nuevoCicloLectivo);
+		
+		String dia = "lunes";
+		String turno = "noche";
+		
+		Curso nuevoCurso = new Curso(materia, dia, turno, nuevoCicloLectivo, aula);
+		
+		unlam.registrarAlumno(lautaro);
+		assertTrue(unlam.registrarAlumno(matias));
+		
+		unlam.agregarCurso(nuevoCurso);
+		assertTrue(unlam.inscribirAlumnoACurso(nuevoCurso.getId(), dni));
+		assertFalse(unlam.inscribirAlumnoACurso(nuevoCurso.getId(), dni2));
+	}
+	
+	@Test
 	public void queNoSePuedaAgregarUnAlumnoSiNoEstaCursandoElMismoDiaYTurno() {
 		Integer dni = 222;
 		String nombre= "Lautaro";
@@ -164,6 +207,4 @@ public class TestAlumno {
 		assertFalse(unlam.inscribirAlumnoACurso(nuevoCurso2.getId(), dni));
 
 	}
-
-
 }

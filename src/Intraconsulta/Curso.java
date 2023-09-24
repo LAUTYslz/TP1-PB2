@@ -10,6 +10,7 @@ public class Curso {
 	private String dia;
 	private Materia materia;
 	private Integer Id;
+	private Integer alumnosInscriptos;
 	private static Integer IdSiguiente =1; 
 	
 
@@ -21,6 +22,7 @@ public class Curso {
 		this.aula = aula;
 		this.Id=this.IdSiguiente;
 		this.IdSiguiente++;
+		this.alumnosInscriptos =0;
 	}
 
 
@@ -83,6 +85,22 @@ public class Curso {
 
 	public void setDia(String dia) {
 		this.dia = dia;
+	}
+	
+	
+
+
+	public Integer getAlumnosInscriptos() {
+		return alumnosInscriptos;
+	}
+
+
+	public void setAlumnosInscriptos(Integer alumnosInscriptos) {
+		this.alumnosInscriptos = alumnosInscriptos;
+	}
+	
+	public void sumarAlumnosInscriptos() {
+		this.alumnosInscriptos++;		
 	}
 
 

@@ -232,12 +232,16 @@ public class Universidad {
 	public Boolean inscribirAlumnoACurso(Integer idCurso, Integer dni) {
 		Alumno alumno = this.buscarAlumnoPorDni(dni);
 		Curso curso = this.buscarCursoPorId(idCurso);
+		Integer cantidadDeAlumnosInscriptos = curso.getAlumnosInscriptos();
 		ArrayList <Curso> cursosDelAlumno = this.buscarCursosDelAlumnoPorDni(dni);
 		
 		if(curso==null || alumno==null) {
 			return false;
 		}
 		if(LocalDate.now().isBefore(curso.getCicloLectivo().getFechaInicioInscripcion()) || LocalDate.now().isAfter(curso.getCicloLectivo().getFechaFinalizacionInscripcion())) {
+			return false;
+		}
+		if (cantidadDeAlumnosInscriptos >= curso.getAula().getCantidadDeLugares()) {
 			return false;
 		}
 		if(cursosDelAlumno!=null){
@@ -254,6 +258,7 @@ public class Universidad {
 			}
 		}
 		AsignacionAlumnoCurso nuevaAsignacion = new AsignacionAlumnoCurso(alumno, curso);
+		curso.sumarAlumnosInscriptos();
 		return asignacionesCursos.add(nuevaAsignacion);
 		
 	}
