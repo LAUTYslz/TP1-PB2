@@ -422,4 +422,63 @@ public class TestAlumno {
 		assertEquals(unlam.materiasQueLeFaltaAprobarAlAlumno(dni).size(),2);
 		
 	}
+	
+	@Test
+	public void NoSepUedeInscribirUnAlumnoSiTieneLaMateriaYaAprobada() {
+//	Nota
+		Integer valor1 = 7;
+		Integer valor2 =7;		
+		ListaExamenes primerParcial = ListaExamenes.PRIMER_PARCIAL;
+		Nota nota1 = new Nota(valor1, primerParcial);
+		ListaExamenes SegundoParcial = ListaExamenes.SEGUNDO_PARCIAL;
+		Nota nota2 = new Nota(valor2, SegundoParcial);
+//	Alumno
+		Integer dni = 222;
+		String nombre= "Lautaro";
+		String apellido= "Salazar";
+		LocalDate FechaNacimiento = LocalDate.parse("2001-04-10");
+		Alumno nuevoAlumno = new Alumno(dni,nombre,apellido,FechaNacimiento);
+//	Universidad
+		nombre = "Unlam";
+		Universidad unlam = new Universidad(nombre);
+//	Materia
+		nombre = "PB1";
+		Materia materia = new Materia(nombre);
+//	Aula
+		Integer cantidadLugares = 40;
+		Aula aula = new Aula(cantidadLugares);
+//	CicloLectivo
+		LocalDate fechaInicio = LocalDate.parse("2023-03-14");
+		LocalDate fechaFinalizacion = LocalDate.parse("2023-06-30");
+		LocalDate fechaInicioInscripcion = LocalDate.parse("2023-03-13");
+		LocalDate fechaFinalizacionInscripcion = LocalDate.parse("2023-10-15");
+		CicloLectivo nuevoCicloLectivo = new CicloLectivo(fechaInicio, fechaFinalizacion, fechaInicioInscripcion,fechaFinalizacionInscripcion);
+		LocalDate fechaInicio2 = LocalDate.parse("2023-09-14");
+		LocalDate fechaFinalizacion2 = LocalDate.parse("2023-12-31");
+		LocalDate fechaInicioInscripcion2 = LocalDate.parse("2023-09-13");
+		LocalDate fechaFinalizacionInscripcion2 = LocalDate.parse("2023-10-15");
+		CicloLectivo nuevoCicloLectivo2 = new CicloLectivo(fechaInicio2, fechaFinalizacion2, fechaInicioInscripcion2,fechaFinalizacionInscripcion2);
+//	Curso
+		String dia = "lunes";
+		String turno = "noche";
+		Curso nuevoCurso = new Curso(materia, dia, turno, nuevoCicloLectivo, aula);
+		Curso nuevoCurso2 = new Curso(materia, dia, turno, nuevoCicloLectivo2, aula);
+		
+//		ACCIONES
+		unlam.registraMateria(materia);
+		unlam.agregarAula(aula);
+		unlam.registrarAlumno(nuevoAlumno);
+		unlam.agregarCicloLectivo(nuevoCicloLectivo);
+		unlam.agregarCicloLectivo(nuevoCicloLectivo2);
+
+		unlam.agregarCurso(nuevoCurso);
+		unlam.agregarCurso(nuevoCurso2);
+		
+		unlam.inscribirAlumnoACurso(nuevoCurso.getId(), dni);
+		unlam.registrarNota(nuevoCurso.getId(),nuevoAlumno.getDni(),nota1);
+		unlam.registrarNota(nuevoCurso.getId(),nuevoAlumno.getDni(),nota2);
+		
+//		VERIFICACION
+		assertFalse(unlam.inscribirAlumnoACurso(nuevoCurso2.getId(), dni));
+	}
 }

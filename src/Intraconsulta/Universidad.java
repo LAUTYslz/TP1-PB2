@@ -287,7 +287,7 @@ public class Universidad {
 				String turno = i.getTurno();
 				LocalDate inicioCurso = i.getCicloLectivo().getFechaInicio();
 				LocalDate finCurso = i.getCicloLectivo().getFechaFinalizacion();
-//			que no este cursando el mismo dia y mismo ciclo
+
 				if (dia.equals(curso.getDia()) && turno.equals(curso.getTurno())
 						&& inicioCurso.equals(curso.getCicloLectivo().getFechaInicio())
 						&& finCurso.equals(curso.getCicloLectivo().getFechaFinalizacion())) {
@@ -295,10 +295,24 @@ public class Universidad {
 				}
 			}
 		}
+//		que no este cursando el mismo dia y mismo ciclo
+		Materia materia = curso.getMateria();
+		Boolean yaLaAprobo = this.yaAproboEstaMateria(materia,dni);
+		if(yaLaAprobo) {
+			return false;
+		}
+//		que no la haya aprobado
 		AsignacionAlumnoCurso nuevaAsignacion = new AsignacionAlumnoCurso(alumno, curso);
 		curso.sumarAlumnosInscriptos();
 		return asignacionesCursosAlumno.add(nuevaAsignacion);
 
+	}
+
+	private Boolean yaAproboEstaMateria(Materia materia, Integer dni) {
+		ArrayList<Materia> materiasAprobadas = this.materiasAprobadasDelAlumno(dni);
+		if(materiasAprobadas.contains(materia))
+			return true;
+		return false;
 	}
 
 	private Boolean tieneCorrelativasAprobadas(Alumno alumno, Materia materia) {
@@ -320,7 +334,7 @@ public class Universidad {
 	}
 
 	private Boolean estaAprobada(Curso curso, Alumno alumno) {
-		AsignacionAlumnoCurso Asignacion = this.buscarAsignacionConCursoYAlumno(curso, alumno);
+		AsignacionAlumnoCurso Asignacion = this.buscarAsignacionConCursoYAlumno(curso.getId(), alumno.getDni());
 		ArrayList<Nota> notas = Asignacion.getNotas();
 		Boolean Parcial1 = false;
 		Boolean Parcial2 = false;
@@ -370,9 +384,7 @@ public class Universidad {
 	}
 
 	public Boolean registrarNota(Integer idCurso, Integer dniAlumno, Nota notaAAsignar) {
-		Curso curso = this.buscarCursoPorId(idCurso);
-		Alumno alumno = this.buscarAlumnoPorDni(dniAlumno);
-		AsignacionAlumnoCurso asignacion = this.buscarAsignacionConCursoYAlumno(curso, alumno);
+		AsignacionAlumnoCurso asignacion = this.buscarAsignacionConCursoYAlumno(idCurso, dniAlumno);
 		Boolean tieneValorValido = this.NotaTieneValorValido(notaAAsignar);
 		if (!tieneValorValido)
 			return false;
@@ -388,7 +400,9 @@ public class Universidad {
 		return false;
 	}
 
-	private AsignacionAlumnoCurso buscarAsignacionConCursoYAlumno(Curso curso, Alumno alumno) {
+	public AsignacionAlumnoCurso buscarAsignacionConCursoYAlumno(Integer cursoId, Integer alumnoDni) {
+		Curso curso = this.buscarCursoPorId(cursoId);
+		Alumno alumno = this.buscarAlumnoPorDni(alumnoDni);
 		if (curso != null && alumno != null)
 			for (AsignacionAlumnoCurso i : asignacionesCursosAlumno)
 				if (i.getCurso().equals(curso) && i.getAlumno().equals(alumno))
@@ -476,6 +490,46 @@ public class Universidad {
 		}
 
 		return null;
+	}
+
+	public void calcularPromedioDelAlumnoEnCursada(Integer dni, Integer idCurso) {
+		AsignacionAlumnoCurso asignacion = this.buscarAsignacionConCursoYAlumno(idCurso, dni);
+		ArrayList<Nota> notas = asignacion.getNotas();
+		Integer Promedio=0;
+		Double sumaDeNotas = 0.0;
+		Integer notaPrimerParcial = 0;
+		Integer notaSegundoParcial = 0;
+		Integer notaRecPrimerParcial = 0;
+		Integer notaRecSegundoParcial = 0;
+		
+		if(notas.size()==2) {
+			for(Nota i: notas) {
+				sumaDeNotas+=i.getValor();
+			}
+			Promedio = (int)Math.round(sumaDeNotas/2);
+		}
+		
+		for(Nota i : notas) {
+			if(i.getExamen().equals(ListaExamenes.PRIMER_PARCIAL))
+				notaPrimerParcial = i.getValor();
+			if(i.getExamen().equals(ListaExamenes.SEGUNDO_PARCIAL))
+				notaSegundoParcial = i.getValor();
+			if(i.getExamen().equals(ListaExamenes.REC_PRIMER_PARCIAL))
+				notaRecPrimerParcial = i.getValor();
+			if(i.getExamen().equals(ListaExamenes.REC_SEGUNDO_PARCIAL))
+				notaRecSegundoParcial = i.getValor();
+		}
+		
+		if(notaRecPrimerParcial == 0) {
+			sumaDeNotas =(double) (notaPrimerParcial + notaRecSegundoParcial);
+		}else if(notaRecSegundoParcial == 0){
+			sumaDeNotas = (double) (notaSegundoParcial + notaRecPrimerParcial);
+		}
+		Promedio = (int)Math.round(sumaDeNotas/2);
+
+			
+		asignacion.setPromedioFinal(Promedio);
+		
 	}
 
 }
