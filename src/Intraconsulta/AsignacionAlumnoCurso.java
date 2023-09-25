@@ -8,6 +8,7 @@ public class AsignacionAlumnoCurso {
 	private Curso curso;
 	private Integer Id;
 	private ArrayList <Nota> notas;
+	private Integer promedioFinal;
 	private static Integer IdSiguiente =1; 
 
 	public AsignacionAlumnoCurso(Alumno alumno, Curso curso) {
@@ -16,6 +17,7 @@ public class AsignacionAlumnoCurso {
 		this.Id=this.IdSiguiente;
 		this.IdSiguiente++;
 		this.notas = new ArrayList<>();
+		this.promedioFinal=0;
 	}
 
 	public Alumno getAlumno() {
@@ -53,5 +55,21 @@ public class AsignacionAlumnoCurso {
 	public void agregarNota(Nota notaAAsignar) {
 		this.notas.add(notaAAsignar);
 	}
+
+	
+	public Integer getPromedioFinal() {
+		return promedioFinal;
+	}
+
+	public void setPromedioFinal(Integer promedioFinal) {
+		this.promedioFinal = promedioFinal;
+	}
+
+	@Override
+	public String toString() {
+		return "AsignacionAlumnoCurso [alumno=" + alumno + ", curso=" + curso + ", promedioFinal=" + promedioFinal
+				+ "]";
+	}
+	
 	
 }

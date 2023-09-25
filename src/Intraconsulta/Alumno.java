@@ -60,6 +60,13 @@ public class Alumno {
 		FechaNacimiento = fechaNacimiento;
 	}
 
+	@Override
+	public String toString() {
+		return "Alumno [dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + "]";
+	}
+	
+	
+
 	
 	
 }

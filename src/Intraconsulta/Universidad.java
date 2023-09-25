@@ -395,7 +395,37 @@ public class Universidad {
 					return i;
 		return null;
 	}
-
+	
+	public ArrayList<Materia> materiasAprobadasDelAlumno(Integer dni) {
+		Alumno alumno = this.buscarAlumnoPorDni(dni);
+		ArrayList<Curso> cursosDelAlumno = this.buscarCursosDelAlumnoPorDni(alumno.getDni());
+		ArrayList<Materia> materias = this.getMaterias();
+		ArrayList<Materia> materiasAprobadas = new ArrayList<>();
+		for (Materia f : materias) {
+			for (Curso i : cursosDelAlumno)
+				if (i.getMateria().equals(f)) {
+					Boolean estaAprobada = this.estaAprobada(i, alumno);
+					if (estaAprobada)
+						materiasAprobadas.add(f);
+				}
+		}
+		return materiasAprobadas;
+	}
+	
+	public ArrayList<Materia> materiasQueLeFaltaAprobarAlAlumno(Integer dni) {
+		ArrayList<Materia> materias = this.getMaterias();
+		ArrayList<Materia> materiasAprobadas = this.materiasAprobadasDelAlumno(dni);
+		ArrayList<Materia> materiasQueLeFaltaAprobar = new ArrayList<>();
+		for (Materia i : materias) {
+			for(Materia f : materiasAprobadas) {
+				if(!i.equals(f)) {
+					materiasQueLeFaltaAprobar.add(i);
+				}
+			}
+		}
+	return materiasQueLeFaltaAprobar;
+	}
+	
 	public boolean inscribirProfesorACurso(Integer id, Integer dni) {
 		Profesor profe = this.buscarProfesorPorDni(dni);
 		Curso curso = this.buscarCursoPorId(id);

@@ -149,8 +149,14 @@ public class Curso {
 	}
 
 
-	
+	@Override
+	public String toString() {
+		return "Curso [cicloLectivo=" + cicloLectivo + ", materia=" + materia + "]";
+	}
 
+
+	
+	
 	
 
 

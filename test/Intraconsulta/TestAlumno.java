@@ -270,4 +270,156 @@ public class TestAlumno {
 		assertTrue(materia2.getCorrelativas().contains(materia));
 		assertFalse(unlam.inscribirAlumnoACurso(nuevoCurso2.getId(), dni));
 	}
+	
+	@Test
+	public void QueSePuedanVerSoloLasMateriasQueSeHayanCursadoYAprobadoDelAlumno() {
+//	Nota
+		Integer valor1 = 7;
+		Integer valor2 =3;		
+		ListaExamenes primerParcial = ListaExamenes.PRIMER_PARCIAL;
+		Nota nota1 = new Nota(valor1, primerParcial);
+		ListaExamenes segundoParcial = ListaExamenes.SEGUNDO_PARCIAL;
+		Nota nota2 = new Nota(valor1, segundoParcial);
+		
+		Nota nota3 = new Nota(valor2, primerParcial);
+		Nota nota4 = new Nota(valor2, segundoParcial);
+//	Alumno
+		Integer dni = 222;
+		String nombre= "Lautaro";
+		String apellido= "Salazar";
+		LocalDate FechaNacimiento = LocalDate.parse("2001-04-10");
+		Alumno nuevoAlumno = new Alumno(dni,nombre,apellido,FechaNacimiento);
+//	Universidad
+		nombre = "Unlam";
+		Universidad unlam = new Universidad(nombre);
+//	Materia
+		nombre = "PB1";
+		Materia materia = new Materia(nombre);
+		nombre = "MATES";
+		Materia materia2 = new Materia(nombre);
+		nombre = "Info";
+		Materia materia3 = new Materia(nombre);
+//	Aula
+		Integer cantidadLugares = 40;
+		Aula aula = new Aula(cantidadLugares);
+//	CicloLectivo
+		LocalDate fechaInicio = LocalDate.parse("2023-03-14");
+		LocalDate fechaFinalizacion = LocalDate.parse("2023-06-30");
+		LocalDate fechaInicioInscripcion = LocalDate.parse("2023-03-13");
+		LocalDate fechaFinalizacionInscripcion = LocalDate.parse("2023-10-15");
+		CicloLectivo nuevoCicloLectivo = new CicloLectivo(fechaInicio, fechaFinalizacion, fechaInicioInscripcion,fechaFinalizacionInscripcion);
+		LocalDate fechaInicio2 = LocalDate.parse("2023-09-14");
+		LocalDate fechaFinalizacion2 = LocalDate.parse("2023-12-31");
+		LocalDate fechaInicioInscripcion2 = LocalDate.parse("2023-09-13");
+		LocalDate fechaFinalizacionInscripcion2 = LocalDate.parse("2023-10-15");
+		CicloLectivo nuevoCicloLectivo2 = new CicloLectivo(fechaInicio2, fechaFinalizacion2, fechaInicioInscripcion2,fechaFinalizacionInscripcion2);
+//	Curso
+		String dia = "lunes";
+		String turno = "noche";
+		Curso nuevoCurso = new Curso(materia, dia, turno, nuevoCicloLectivo, aula);
+		Curso nuevoCurso2 = new Curso(materia2, dia, turno, nuevoCicloLectivo2, aula);
+		
+//		ACCIONES
+		unlam.registraMateria(materia);
+		unlam.registraMateria(materia2);
+		unlam.registraMateria(materia3);
+		
+		unlam.agregarAula(aula);
+		unlam.registrarAlumno(nuevoAlumno);
+		unlam.agregarCicloLectivo(nuevoCicloLectivo);
+		unlam.agregarCicloLectivo(nuevoCicloLectivo2);
+
+		unlam.agregarCurso(nuevoCurso);
+		unlam.agregarCurso(nuevoCurso2);
+		
+		unlam.inscribirAlumnoACurso(nuevoCurso.getId(), dni);
+		unlam.inscribirAlumnoACurso(nuevoCurso2.getId(), dni);
+		
+		unlam.registrarNota(nuevoCurso.getId(),nuevoAlumno.getDni(),nota1);
+		unlam.registrarNota(nuevoCurso.getId(),nuevoAlumno.getDni(),nota2);
+		unlam.registrarNota(nuevoCurso2.getId(),nuevoAlumno.getDni(),nota3);
+		unlam.registrarNota(nuevoCurso2.getId(),nuevoAlumno.getDni(),nota4);
+		
+		
+		
+//		VERIFICACION
+		assertEquals(unlam.materiasAprobadasDelAlumno(dni).size(),1);
+		
+	}
+	
+	@Test
+	public void QueSePuedanVerSoloLasMateriasQueLeFaltaAprobarAlAlumno() {
+//	Nota
+		Integer valor1 = 7;
+		Integer valor2 =3;		
+		ListaExamenes primerParcial = ListaExamenes.PRIMER_PARCIAL;
+		Nota nota1 = new Nota(valor1, primerParcial);
+		ListaExamenes segundoParcial = ListaExamenes.SEGUNDO_PARCIAL;
+		Nota nota2 = new Nota(valor1, segundoParcial);
+		
+		Nota nota3 = new Nota(valor2, primerParcial);
+		Nota nota4 = new Nota(valor2, segundoParcial);
+//	Alumno
+		Integer dni = 222;
+		String nombre= "Lautaro";
+		String apellido= "Salazar";
+		LocalDate FechaNacimiento = LocalDate.parse("2001-04-10");
+		Alumno nuevoAlumno = new Alumno(dni,nombre,apellido,FechaNacimiento);
+//	Universidad
+		nombre = "Unlam";
+		Universidad unlam = new Universidad(nombre);
+//	Materia
+		nombre = "PB1";
+		Materia materia = new Materia(nombre);
+		nombre = "MATES";
+		Materia materia2 = new Materia(nombre);
+		nombre = "Info";
+		Materia materia3 = new Materia(nombre);
+//	Aula
+		Integer cantidadLugares = 40;
+		Aula aula = new Aula(cantidadLugares);
+//	CicloLectivo
+		LocalDate fechaInicio = LocalDate.parse("2023-03-14");
+		LocalDate fechaFinalizacion = LocalDate.parse("2023-06-30");
+		LocalDate fechaInicioInscripcion = LocalDate.parse("2023-03-13");
+		LocalDate fechaFinalizacionInscripcion = LocalDate.parse("2023-10-15");
+		CicloLectivo nuevoCicloLectivo = new CicloLectivo(fechaInicio, fechaFinalizacion, fechaInicioInscripcion,fechaFinalizacionInscripcion);
+		LocalDate fechaInicio2 = LocalDate.parse("2023-09-14");
+		LocalDate fechaFinalizacion2 = LocalDate.parse("2023-12-31");
+		LocalDate fechaInicioInscripcion2 = LocalDate.parse("2023-09-13");
+		LocalDate fechaFinalizacionInscripcion2 = LocalDate.parse("2023-10-15");
+		CicloLectivo nuevoCicloLectivo2 = new CicloLectivo(fechaInicio2, fechaFinalizacion2, fechaInicioInscripcion2,fechaFinalizacionInscripcion2);
+//	Curso
+		String dia = "lunes";
+		String turno = "noche";
+		Curso nuevoCurso = new Curso(materia, dia, turno, nuevoCicloLectivo, aula);
+		Curso nuevoCurso2 = new Curso(materia2, dia, turno, nuevoCicloLectivo2, aula);
+		
+//		ACCIONES
+		unlam.registraMateria(materia);
+		unlam.registraMateria(materia2);
+		unlam.registraMateria(materia3);
+		
+		unlam.agregarAula(aula);
+		unlam.registrarAlumno(nuevoAlumno);
+		unlam.agregarCicloLectivo(nuevoCicloLectivo);
+		unlam.agregarCicloLectivo(nuevoCicloLectivo2);
+
+		unlam.agregarCurso(nuevoCurso);
+		unlam.agregarCurso(nuevoCurso2);
+		
+		unlam.inscribirAlumnoACurso(nuevoCurso.getId(), dni);
+		unlam.inscribirAlumnoACurso(nuevoCurso2.getId(), dni);
+		
+		unlam.registrarNota(nuevoCurso.getId(),nuevoAlumno.getDni(),nota1);
+		unlam.registrarNota(nuevoCurso.getId(),nuevoAlumno.getDni(),nota2);
+		unlam.registrarNota(nuevoCurso2.getId(),nuevoAlumno.getDni(),nota3);
+		unlam.registrarNota(nuevoCurso2.getId(),nuevoAlumno.getDni(),nota4);
+		
+		
+		
+//		VERIFICACION
+		assertEquals(unlam.materiasQueLeFaltaAprobarAlAlumno(dni).size(),2);
+		
+	}
 }
