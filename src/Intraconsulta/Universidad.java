@@ -92,6 +92,9 @@ public class Universidad {
 	}
 
 	public Boolean registrarAlumno(Alumno nuevoAlumno) {
+		if (nuevoAlumno==null) {
+			return false;
+		}
 		if (buscarAlumnoPorDni(nuevoAlumno.getDni()) == null)
 
 			return this.alumnosInscriptos.add(nuevoAlumno);
@@ -110,6 +113,10 @@ public class Universidad {
 	}
 
 	public boolean registraMateria(Materia materia) {
+		if (materia==null) {
+			return false;
+		}
+		
 		for (Materia existeMateria : materias) {
 			if (existeMateria.getNombre().equals(materia.getNombre())) {
 				return false; // La materia con el mismo nombre ya existe
@@ -129,6 +136,9 @@ public class Universidad {
 	}
 
 	public Boolean agregarProfesor(Profesor profesor) {
+		if (profesor==null) {
+			return false;
+		}
 		for (Profesor i : profesoresInscriptos)
 			if (i.getDni().equals(profesor.getDni()))
 				return false;
@@ -138,6 +148,9 @@ public class Universidad {
 	}
 
 	public Boolean agregarCicloLectivo(CicloLectivo nuevoCiclo) {
+		if (nuevoCiclo==null) {
+			return false;
+		}
 		for (CicloLectivo i : ciclosLectivos) {
 			if (i.getFechaInicio().isBefore(nuevoCiclo.getFechaInicio())
 					&& i.getFechaFinalizacion().isAfter(nuevoCiclo.getFechaInicio())
@@ -180,8 +193,11 @@ public class Universidad {
 		return false;
 	}
 
-	public void agregarAula(Aula aula) {
-		this.aulas.add(aula);
+	public Boolean agregarAula(Aula aula) {
+		if (aula==null) {
+			return false;
+		}
+		return this.aulas.add(aula);
 	}
 
 //	public void agregarCurso(Integer idMateria, Horario horario, Integer idCicloLectivo, Integer nroAula) {
@@ -243,8 +259,7 @@ public class Universidad {
 		Alumno alumno = this.buscarAlumnoPorDni(dni);
 		Curso curso = this.buscarCursoPorId(idCurso);
 //		Hay que hacer un if es nulo (el curso no pertenece a la universidad)
-		ArrayList<Curso> cursosDelAlumno = this.buscarCursosDelAlumnoPorDni(dni);
-
+			
 		if (curso == null || alumno == null) {
 			return false;
 //			que alumno y curso este de alta
@@ -265,6 +280,7 @@ public class Universidad {
 			return false;
 //			que haya lugar
 		}
+		ArrayList<Curso> cursosDelAlumno = this.buscarCursosDelAlumnoPorDni(dni);
 		if (cursosDelAlumno != null) {
 			for (Curso i : cursosDelAlumno) {
 				String dia = i.getDia();
@@ -383,20 +399,46 @@ public class Universidad {
 	public boolean inscribirProfesorACurso(Integer id, Integer dni) {
 		Profesor profe = this.buscarProfesorPorDni(dni);
 		Curso curso = this.buscarCursoPorId(id);
-	//	ArrayList<Curso> cursosDelProfesor = this.buscarCursosDelProfesorPorDni(dni);
+// que no sea nulo
 		if (curso == null || profe == null) {
 			return false;
 		}
+// que se cumpla 1 profe cada 20 alumnos
 		Integer cantidadDeProfesoresNecesarios = curso.profesoresNecesarios();
 		Integer cantidadDeProfesoresEnCurso = curso.getProfesoresInscriptos();
 		if (cantidadDeProfesoresEnCurso == cantidadDeProfesoresNecesarios) {
 			return false;
+		}
+		
+// que no pueda anotarse a otro curso el mismo dia, horario y ciclolectivo
+		ArrayList<Curso> cursosDelProfesor = this.buscarCursosDelProfesorPorDni(dni);
+		if (cursosDelProfesor != null) {
+			for (Curso i : cursosDelProfesor) {
+				String dia = i.getDia();
+				String turno = i.getTurno();
+				LocalDate inicioCurso = i.getCicloLectivo().getFechaInicio();
+				LocalDate finCurso = i.getCicloLectivo().getFechaFinalizacion();
+//			que no este cursando el mismo dia y mismo ciclo
+				if (dia.equals(curso.getDia()) && turno.equals(curso.getTurno())
+						&& inicioCurso.equals(curso.getCicloLectivo().getFechaInicio())
+						&& finCurso.equals(curso.getCicloLectivo().getFechaFinalizacion())) {
+					return false;
+				}
+			}
 		}
 		AsignacionProfesorCurso nuevaAsignacion = new AsignacionProfesorCurso(profe, curso);
 		curso.sumarProfesoresInscriptos();
 		return asignacionesCursosProfe.add(nuevaAsignacion);
 	}
 	
+	private ArrayList<Curso> buscarCursosDelProfesorPorDni(Integer dni) {
+		ArrayList<Curso> cursosProf = new ArrayList<>();
+		for (AsignacionProfesorCurso i : asignacionesCursosProfe)
+			if (i != null && i.getProfesor().getDni().equals(dni))
+				cursosProf.add(i.getCurso());
+		return cursosProf;
+	}
+
 	private Profesor buscarProfesorPorDni(Integer dni) {
 		for (int i = 0; i < profesoresInscriptos.size(); i++) {
 			if (this.profesoresInscriptos.get(i).getDni().equals(dni))

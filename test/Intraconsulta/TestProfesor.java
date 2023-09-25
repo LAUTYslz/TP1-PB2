@@ -33,7 +33,6 @@ public class TestProfesor {
 		Profesor profesor = new Profesor(dni, nombre, apellido);
 		String NombreUniversidad = "UNLaM";
 		Universidad actual = new Universidad(NombreUniversidad);
-		
 		actual.agregarProfesor(profesor);
 		
 		assertTrue(actual.getProfesoresInscriptos().contains(profesor));
@@ -174,6 +173,64 @@ public class TestProfesor {
 
 	}	
 	
+	@Test
+	public void queNoSePuedaAgregarUnProfesorAUnCursoSiYaEstaEnOtroCursoElMismoDiaHorarioYCiclolectivo() {
+//Profe
+		Integer dni = 777;
+		String nombre= "Juan";
+		String apellido= "Monteagudo";
+		Profesor profe = new Profesor(dni,nombre,apellido);
+		
+//Alumno
+		Integer dniAlumno = 222;
+		String nombreAlumno= "Lautaro";
+		String apellidoAlumno= "Salazar";
+		LocalDate FechaNacimiento = LocalDate.parse("2001-04-10");
+		
+//Uni	
+		nombre = "Unlam";
+		Universidad unlam = new Universidad(nombre);
+		
+//Materia
+		nombre = "PB2";
+		Materia materia = new Materia(nombre);
+		unlam.registraMateria(materia);
+		
+//Aula
+		Integer cantidadLugares = 40;
+		Aula aula = new Aula(cantidadLugares);
+		unlam.agregarAula(aula);
+		
+//Ciclo	
+		LocalDate fechaInicio = LocalDate.parse("2023-09-14");
+		LocalDate fechaFinalizacion = LocalDate.parse("2023-12-31");
+		LocalDate fechaInicioInscripcion = LocalDate.parse("2023-09-13");
+		LocalDate fechaFinalizacionInscripcion = LocalDate.parse("2023-10-15");
+		CicloLectivo nuevoCicloLectivo = new CicloLectivo(fechaInicio, fechaFinalizacion, fechaInicioInscripcion,fechaFinalizacionInscripcion);
+		unlam.agregarCicloLectivo(nuevoCicloLectivo);
 	
+//Curso	
+		String dia = "lunes";
+		String turno = "noche";
+		Curso nuevoCurso = new Curso(materia, dia, turno, nuevoCicloLectivo, aula);
+	
+//ACCIONES	
+		unlam.agregarProfesor(profe);
+		unlam.agregarCurso(nuevoCurso);
+		
+//Alumno
+		for(int i=0;i<22;i++) {
+			Alumno nuevoAlumno = new Alumno(dniAlumno,nombreAlumno,apellidoAlumno,FechaNacimiento);
+			unlam.registrarAlumno(nuevoAlumno);
+			unlam.inscribirAlumnoACurso(nuevoCurso.getId(), dniAlumno);
+			dniAlumno++;
+		}
+		
+		
+//VERIFICACIONES	
+		assertTrue(unlam.inscribirProfesorACurso(nuevoCurso.getId(), dni));
+		assertFalse(unlam.inscribirProfesorACurso(nuevoCurso.getId(), dni));
 
+	}
+	
 }
