@@ -11,6 +11,7 @@ public class Curso {
 	private Materia materia;
 	private Integer Id;
 	private Integer alumnosInscriptos;
+	private Integer profesoresInscriptos;
 	private static Integer IdSiguiente =1; 
 	
 
@@ -23,6 +24,7 @@ public class Curso {
 		this.Id=this.IdSiguiente;
 		this.IdSiguiente++;
 		this.alumnosInscriptos =0;
+		this.profesoresInscriptos =0;
 	}
 
 
@@ -102,6 +104,29 @@ public class Curso {
 	public void sumarAlumnosInscriptos() {
 		this.alumnosInscriptos++;		
 	}
+	
+	public Integer profesoresNecesarios() {
+		Double alumnos = (double)this.alumnosInscriptos;
+		Double aRedondear = alumnos/20;
+		Integer profesores = (int)(Math.ceil(aRedondear));
+		return profesores;
+	}
+
+	public Integer getProfesoresInscriptos() {
+		return profesoresInscriptos;
+	}
+
+
+	public void setProfesoresInscriptos(Integer profesoresInscriptos) {
+		this.profesoresInscriptos = profesoresInscriptos;
+	}
+
+
+	public void sumarProfesoresInscriptos() {
+		profesoresInscriptos++;
+	
+	}
+
 
 
 	@Override
@@ -122,6 +147,11 @@ public class Curso {
 		return Objects.equals(cicloLectivo, other.cicloLectivo) && Objects.equals(dia, other.dia)
 				&& Objects.equals(materia, other.materia) && Objects.equals(turno, other.turno);
 	}
+
+
+	
+
+	
 
 
 	

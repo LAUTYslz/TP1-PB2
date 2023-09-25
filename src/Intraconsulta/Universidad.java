@@ -7,22 +7,24 @@ public class Universidad {
 
 	private String nombre;
 	private ArrayList<Alumno> alumnosInscriptos;
+	private ArrayList<Profesor> profesoresInscriptos;
 	private ArrayList<Materia> materias;
-	private ArrayList<Profesor> profesores;
 	private ArrayList<CicloLectivo> ciclosLectivos;
 	private ArrayList<Aula> aulas;
 	private ArrayList<Curso> cursos;
-	private ArrayList<AsignacionAlumnoCurso> asignacionesCursos;
+	private ArrayList<AsignacionAlumnoCurso> asignacionesCursosAlumno;
+	private ArrayList<AsignacionProfesorCurso> asignacionesCursosProfe;
 
 	public Universidad(String nombreUniversidad) {
 		this.nombre = nombreUniversidad;
 		this.alumnosInscriptos = new ArrayList<>();
 		this.materias = new ArrayList<>();
-		this.profesores = new ArrayList<>();
 		this.ciclosLectivos = new ArrayList<>();
 		this.aulas = new ArrayList<>();
 		this.cursos = new ArrayList<>();
-		this.asignacionesCursos = new ArrayList<>();
+		this.asignacionesCursosAlumno = new ArrayList<>();
+		this.profesoresInscriptos = new ArrayList<>();
+		this.asignacionesCursosProfe = new ArrayList<>();
 	}
 
 	public String getNombre() {
@@ -49,12 +51,12 @@ public class Universidad {
 		this.materias = materias;
 	}
 
-	public ArrayList<Profesor> getProfesores() {
-		return profesores;
+	public ArrayList<Profesor> getProfesoresInscriptos() {
+		return profesoresInscriptos;
 	}
 
-	public void setProfesores(ArrayList<Profesor> profesores) {
-		this.profesores = profesores;
+	public void setProfesoresInscriptos(ArrayList<Profesor> profesores) {
+		this.profesoresInscriptos = profesores;
 	}
 
 	public ArrayList<CicloLectivo> getCiclosLectivos() {
@@ -126,12 +128,12 @@ public class Universidad {
 		return null;
 	}
 
-	public Boolean agregarDocente(Profesor profesor) {
-		for (Profesor i : profesores)
+	public Boolean agregarProfesor(Profesor profesor) {
+		for (Profesor i : profesoresInscriptos)
 			if (i.getDni().equals(profesor.getDni()))
 				return false;
 
-		return this.profesores.add(profesor);
+		return this.profesoresInscriptos.add(profesor);
 
 	}
 
@@ -279,7 +281,7 @@ public class Universidad {
 		}
 		AsignacionAlumnoCurso nuevaAsignacion = new AsignacionAlumnoCurso(alumno, curso);
 		curso.sumarAlumnosInscriptos();
-		return asignacionesCursos.add(nuevaAsignacion);
+		return asignacionesCursosAlumno.add(nuevaAsignacion);
 
 	}
 
@@ -337,7 +339,7 @@ public class Universidad {
 
 	private ArrayList<Curso> buscarCursosDelAlumnoPorDni(Integer dni) {
 		ArrayList<Curso> cursosAlumno = new ArrayList<>();
-		for (AsignacionAlumnoCurso i : asignacionesCursos)
+		for (AsignacionAlumnoCurso i : asignacionesCursosAlumno)
 			if (i != null && i.getAlumno().getDni().equals(dni))
 				cursosAlumno.add(i.getCurso());
 		return cursosAlumno;
@@ -372,9 +374,35 @@ public class Universidad {
 
 	private AsignacionAlumnoCurso buscarAsignacionConCursoYAlumno(Curso curso, Alumno alumno) {
 		if (curso != null && alumno != null)
-			for (AsignacionAlumnoCurso i : asignacionesCursos)
+			for (AsignacionAlumnoCurso i : asignacionesCursosAlumno)
 				if (i.getCurso().equals(curso) && i.getAlumno().equals(alumno))
 					return i;
+		return null;
+	}
+
+	public boolean inscribirProfesorACurso(Integer id, Integer dni) {
+		Profesor profe = this.buscarProfesorPorDni(dni);
+		Curso curso = this.buscarCursoPorId(id);
+	//	ArrayList<Curso> cursosDelProfesor = this.buscarCursosDelProfesorPorDni(dni);
+		if (curso == null || profe == null) {
+			return false;
+		}
+		Integer cantidadDeProfesoresNecesarios = curso.profesoresNecesarios();
+		Integer cantidadDeProfesoresEnCurso = curso.getProfesoresInscriptos();
+		if (cantidadDeProfesoresEnCurso == cantidadDeProfesoresNecesarios) {
+			return false;
+		}
+		AsignacionProfesorCurso nuevaAsignacion = new AsignacionProfesorCurso(profe, curso);
+		curso.sumarProfesoresInscriptos();
+		return asignacionesCursosProfe.add(nuevaAsignacion);
+	}
+	
+	private Profesor buscarProfesorPorDni(Integer dni) {
+		for (int i = 0; i < profesoresInscriptos.size(); i++) {
+			if (this.profesoresInscriptos.get(i).getDni().equals(dni))
+				return this.profesoresInscriptos.get(i);
+		}
+
 		return null;
 	}
 
