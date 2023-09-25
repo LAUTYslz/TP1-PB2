@@ -509,24 +509,25 @@ public class Universidad {
 			Promedio = (int)Math.round(sumaDeNotas/2);
 		}
 		
-		for(Nota i : notas) {
-			if(i.getExamen().equals(ListaExamenes.PRIMER_PARCIAL))
-				notaPrimerParcial = i.getValor();
-			if(i.getExamen().equals(ListaExamenes.SEGUNDO_PARCIAL))
-				notaSegundoParcial = i.getValor();
-			if(i.getExamen().equals(ListaExamenes.REC_PRIMER_PARCIAL))
-				notaRecPrimerParcial = i.getValor();
-			if(i.getExamen().equals(ListaExamenes.REC_SEGUNDO_PARCIAL))
-				notaRecSegundoParcial = i.getValor();
+		if (notas.size()==3) {
+			for(Nota i : notas) {
+				if(i.getExamen().equals(ListaExamenes.PRIMER_PARCIAL))
+					notaPrimerParcial = i.getValor();
+				if(i.getExamen().equals(ListaExamenes.SEGUNDO_PARCIAL))
+					notaSegundoParcial = i.getValor();
+				if(i.getExamen().equals(ListaExamenes.REC_PRIMER_PARCIAL))
+					notaRecPrimerParcial = i.getValor();
+				if(i.getExamen().equals(ListaExamenes.REC_SEGUNDO_PARCIAL))
+					notaRecSegundoParcial = i.getValor();
 		}
 		
-		if(notaRecPrimerParcial == 0) {
-			sumaDeNotas =(double) (notaPrimerParcial + notaRecSegundoParcial);
-		}else if(notaRecSegundoParcial == 0){
-			sumaDeNotas = (double) (notaSegundoParcial + notaRecPrimerParcial);
-		}
-		Promedio = (int)Math.round(sumaDeNotas/2);
-
+			if(notaRecPrimerParcial == 0) {
+				sumaDeNotas =(double) (notaPrimerParcial + notaRecSegundoParcial);
+			}else if(notaRecSegundoParcial == 0){
+				sumaDeNotas = (double) (notaSegundoParcial + notaRecPrimerParcial);
+			}
+				Promedio = (int)Math.round(sumaDeNotas/2);
+	}
 			
 		asignacion.setPromedioFinal(Promedio);
 		

@@ -14,7 +14,7 @@ public class TestAsignacionAlumnoCurso {
 		Integer valor = 10;
 		ListaExamenes primerParcial = ListaExamenes.PRIMER_PARCIAL;
 		Integer valor2 = 7;
-		ListaExamenes segundoParcial = ListaExamenes.PRIMER_PARCIAL;
+		ListaExamenes segundoParcial = ListaExamenes.SEGUNDO_PARCIAL;
 		Nota nota1 = new Nota(valor, primerParcial);
 		Nota nota2 = new Nota(valor2, segundoParcial);
 //	Alumno
