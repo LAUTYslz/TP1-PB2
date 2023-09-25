@@ -3,6 +3,7 @@ package Intraconsulta;
 import static org.junit.Assert.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import org.junit.Test;
 
@@ -108,9 +109,10 @@ public class TestAsignacionAlumnoCurso {
 		unlam.agregarCurso(nuevoCurso);
 		
 		unlam.inscribirAlumnoACurso(nuevoCurso.getId(), dni);
+		unlam.registrarNota(nuevoCurso.getId(),nuevoAlumno.getDni(),nota3);
 		unlam.registrarNota(nuevoCurso.getId(),nuevoAlumno.getDni(),nota1);
 		unlam.registrarNota(nuevoCurso.getId(),nuevoAlumno.getDni(),nota2);
-		unlam.registrarNota(nuevoCurso.getId(),nuevoAlumno.getDni(),nota3);
+		
 		
 		AsignacionAlumnoCurso asignacion = unlam.buscarAsignacionConCursoYAlumno(nuevoCurso.getId(),dni);
 //		VERIFICACION
@@ -278,9 +280,12 @@ public class TestAsignacionAlumnoCurso {
 		AsignacionAlumnoCurso asignacion = unlam.buscarAsignacionConCursoYAlumno(nuevoCurso.getId(),dni);
 		unlam.calcularPromedioDelAlumnoEnCursada(dni,nuevoCurso.getId());
 //		VERIFICACION
-		Integer notaFinal=0;
-		notaFinal = unlam.buscarLaNotaFinalDelAlumno(asignacion.getId());
-		assertEquals(asignacion.getPromedioFinal(),notaFinal);
+		ArrayList<Integer> notaFinal= new ArrayList<>();
+		notaFinal = unlam.buscarLaNotaFinalDelAlumno(materia.getId(),dni);
+		assertTrue(notaFinal.contains(asignacion.getPromedioFinal())); 
+		// hicimos un array por que puede haber 2 notas finales de esa misma materia si es que el alumno la recurso 
+		// y el assert no dice si ese array de nota final contiene al promedioFinal de asignacion
+		
 	}
 
 

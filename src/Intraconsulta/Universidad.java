@@ -334,27 +334,28 @@ public class Universidad {
 	}
 
 	private Boolean estaAprobada(Curso curso, Alumno alumno) {
-		AsignacionAlumnoCurso Asignacion = this.buscarAsignacionConCursoYAlumno(curso.getId(), alumno.getDni());
-		ArrayList<Nota> notas = Asignacion.getNotas();
-		Boolean Parcial1 = false;
-		Boolean Parcial2 = false;
-		Boolean RecParcial1 = false;
-		Boolean RecParcial2 = false;
+		AsignacionAlumnoCurso asignacion = this.buscarAsignacionConCursoYAlumno(curso.getId(), alumno.getDni());
+		ArrayList<Nota> notas = asignacion.getNotas();
+		Boolean parcial1 = false;
+		Boolean parcial2 = false;
+		Boolean recParcial1 = false;
+		Boolean recParcial2 = false;
 		for (Nota i : notas) {
 			if (i.getExamen().equals(ListaExamenes.PRIMER_PARCIAL) && i.getValor() >= 4) {
-				Parcial1 = true;
+				parcial1 = true;
 			}
 			if (i.getExamen().equals(ListaExamenes.SEGUNDO_PARCIAL) && i.getValor() >= 4) {
-				Parcial2 = true;
+				parcial2 = true;
 			}
 			if (i.getExamen().equals(ListaExamenes.REC_PRIMER_PARCIAL) && i.getValor() >= 4) {
-				RecParcial1 = true;
+				recParcial1 = true;
 			}
 			if (i.getExamen().equals(ListaExamenes.REC_SEGUNDO_PARCIAL) && i.getValor() >= 4) {
-				RecParcial2 = true;
+				recParcial2 = true;
 			}
 		}
-		if ((Parcial1 && Parcial2) || (Parcial1 && RecParcial2) || (RecParcial1 && Parcial2)) {
+		if ((parcial1 && parcial2) || (parcial1 && recParcial2) || (recParcial1 && parcial2)) {
+			this.calcularPromedioDelAlumnoEnCursada(alumno.getDni(), curso.getId());
 			return true;
 		}
 		return false;
@@ -569,9 +570,17 @@ public class Universidad {
 		
 	}
 
-	public Integer buscarLaNotaFinalDelAlumno(Integer id) {
-		AsignacionAlumnoCurso buscada = this.buscarAsignacionPorId(id);
-		return buscada.getPromedioFinal();
+	public ArrayList<Integer> buscarLaNotaFinalDelAlumno(Integer idMateria,Integer dni) {
+		ArrayList<Curso> cursosDelAlumno = this.buscarCursosDelAlumnoPorDni(dni);
+		ArrayList<Integer> notaFinalDelCurso = new ArrayList<>();
+		for(Curso i:cursosDelAlumno) {
+			if(i.getMateria().getId().equals(idMateria)){
+				AsignacionAlumnoCurso asignacion = this.buscarAsignacionConCursoYAlumno(i.getId(), dni);
+				notaFinalDelCurso.add(asignacion.getPromedioFinal());
+			}
+		}
+		
+		return notaFinalDelCurso;
 	}
 
 	private AsignacionAlumnoCurso buscarAsignacionPorId(Integer id) {

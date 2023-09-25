@@ -127,7 +127,7 @@ public class TestNota {
 //	@Test
 //	public void QueNoSePuedaAsignarUnaNotaMayorOIgualA7SiNoEstanLasCorrelativasAprobadas() {
 ////	Nota
-//		Integer valor = 11;
+//		Integer valor = 10;
 //		ListaExamenes examen = ListaExamenes.PRIMER_PARCIAL;
 //		Integer IdEsperado = 2;
 //		Nota nota = new Nota(valor, examen);
