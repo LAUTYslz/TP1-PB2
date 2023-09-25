@@ -387,14 +387,33 @@ public class Universidad {
 		AsignacionAlumnoCurso asignacion = this.buscarAsignacionConCursoYAlumno(idCurso, dniAlumno);
 		Boolean tieneValorValido = this.NotaTieneValorValido(notaAAsignar);
 		Boolean yaExisteNotaParaEseParcial = this.notaYaAsignadaAEsteParcial(asignacion,notaAAsignar);
+		Boolean yaHayOtroRecuperatorioCargado = this.hayNotaCargadaEnOtroRecuperatorio(asignacion,notaAAsignar);
 		if (!tieneValorValido) {
 			return false;
 		}
 		if(yaExisteNotaParaEseParcial) {
 			return false;
 		}
+		if(yaHayOtroRecuperatorioCargado) {
+			return false;
+		}
 		asignacion.agregarNota(notaAAsignar);
 		return true;
+	}
+
+	private Boolean hayNotaCargadaEnOtroRecuperatorio(AsignacionAlumnoCurso asignacion, Nota notaAAsignar) {
+		ListaExamenes examen = notaAAsignar.getExamen();
+		ArrayList<Nota> notasCargadas = asignacion.getNotas();
+		if(examen.equals(ListaExamenes.REC_PRIMER_PARCIAL)||examen.equals(ListaExamenes.REC_SEGUNDO_PARCIAL)) {
+			for(Nota i: notasCargadas) {
+				if(i.getExamen().equals(ListaExamenes.REC_PRIMER_PARCIAL) || i.getExamen().equals(ListaExamenes.REC_SEGUNDO_PARCIAL) ) {
+					return true;
+				}
+			}
+		}
+		
+
+		return false;
 	}
 
 	private Boolean notaYaAsignadaAEsteParcial(AsignacionAlumnoCurso asignacion, Nota notaAAsignar) {
