@@ -569,4 +569,18 @@ public class Universidad {
 		
 	}
 
+	public Integer buscarLaNotaFinalDelAlumno(Integer id) {
+		AsignacionAlumnoCurso buscada = this.buscarAsignacionPorId(id);
+		return buscada.getPromedioFinal();
+	}
+
+	private AsignacionAlumnoCurso buscarAsignacionPorId(Integer id) {
+		for(AsignacionAlumnoCurso i: asignacionesCursosAlumno) {
+			if(i.getId().equals(id)) {
+				return i;
+			}
+		}
+		return null;
+	}
+
 }
