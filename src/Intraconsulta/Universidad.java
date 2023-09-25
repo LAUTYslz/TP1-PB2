@@ -467,6 +467,9 @@ public class Universidad {
 		ArrayList<Materia> materias = this.getMaterias();
 		ArrayList<Materia> materiasAprobadas = this.materiasAprobadasDelAlumno(dni);
 		ArrayList<Materia> materiasQueLeFaltaAprobar = new ArrayList<>();
+		if(materiasAprobadas.size()==0) {
+			return materias;
+		}
 		for (Materia i : materias) {
 			for(Materia f : materiasAprobadas) {
 				if(!i.equals(f)) {

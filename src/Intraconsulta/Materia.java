@@ -59,6 +59,13 @@ public class Materia {
 		Materia other = (Materia) obj;
 		return Objects.equals(Id, other.Id) && Objects.equals(nombre, other.nombre);
 	}
+
+	@Override
+	public String toString() {
+		return "Materia [nombre=" + nombre + "]";
+	}
+	
+	
 	
 	
 
