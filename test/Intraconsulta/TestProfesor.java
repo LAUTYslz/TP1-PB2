@@ -64,6 +64,12 @@ public class TestProfesor {
 		String apellido= "Monteagudo";
 		Profesor profe = new Profesor(dni,nombre,apellido);
 		
+//Alumno
+		Integer dniAlumno = 222;
+		String nombreAlumno= "Lautaro";
+		String apellidoAlumno= "Salazar";
+		LocalDate FechaNacimiento = LocalDate.parse("2001-04-10");
+		
 //Uni	
 		nombre = "Unlam";
 		Universidad unlam = new Universidad(nombre);
@@ -94,6 +100,11 @@ public class TestProfesor {
 //ACCIONES	
 		unlam.agregarProfesor(profe);
 		unlam.agregarCurso(nuevoCurso);
+		
+//Alumno
+		Alumno nuevoAlumno = new Alumno(dniAlumno,nombreAlumno,apellidoAlumno,FechaNacimiento);
+		assertTrue(unlam.registrarAlumno(nuevoAlumno));
+		assertTrue(unlam.inscribirAlumnoACurso(nuevoCurso.getId(), dniAlumno));
 		
 //VERIFICACIONES	
 		assertTrue(unlam.inscribirProfesorACurso(nuevoCurso.getId(), dni));
