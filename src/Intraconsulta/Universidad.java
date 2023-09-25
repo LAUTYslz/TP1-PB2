@@ -84,11 +84,11 @@ public class Universidad {
 	}
 
 	public ArrayList<AsignacionAlumnoCurso> getAsignacionesCursos() {
-		return asignacionesCursos;
+		return asignacionesCursosAlumno;
 	}
 
 	public void setAsignacionesCursos(ArrayList<AsignacionAlumnoCurso> asignacionesCursos) {
-		this.asignacionesCursos = asignacionesCursos;
+		this.asignacionesCursosAlumno = asignacionesCursos;
 	}
 
 	public Boolean registrarAlumno(Alumno nuevoAlumno) {
