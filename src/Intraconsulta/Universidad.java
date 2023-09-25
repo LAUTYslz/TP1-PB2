@@ -81,6 +81,14 @@ public class Universidad {
 		this.cursos = cursos;
 	}
 
+	public ArrayList<AsignacionAlumnoCurso> getAsignacionesCursos() {
+		return asignacionesCursos;
+	}
+
+	public void setAsignacionesCursos(ArrayList<AsignacionAlumnoCurso> asignacionesCursos) {
+		this.asignacionesCursos = asignacionesCursos;
+	}
+
 	public Boolean registrarAlumno(Alumno nuevoAlumno) {
 		if (buscarAlumnoPorDni(nuevoAlumno.getDni()) == null)
 
@@ -237,14 +245,23 @@ public class Universidad {
 
 		if (curso == null || alumno == null) {
 			return false;
+//			que alumno y curso este de alta
+		}
+		Boolean tieneCorrelativas = this.materiaTieneCorrelativas(curso.getMateria());
+		if (tieneCorrelativas) {
+			Boolean aproboCorrelativas = this.tieneCorrelativasAprobadas(alumno, curso.getMateria());
+			if (!aproboCorrelativas)
+				return false;
 		}
 		if (LocalDate.now().isBefore(curso.getCicloLectivo().getFechaInicioInscripcion())
 				|| LocalDate.now().isAfter(curso.getCicloLectivo().getFechaFinalizacionInscripcion())) {
 			return false;
+//			que este dentro de la fecha de inscripcion
 		}
 		Integer cantidadDeAlumnosInscriptos = curso.getAlumnosInscriptos();
 		if (cantidadDeAlumnosInscriptos >= curso.getAula().getCantidadDeLugares()) {
 			return false;
+//			que haya lugar
 		}
 		if (cursosDelAlumno != null) {
 			for (Curso i : cursosDelAlumno) {
@@ -252,7 +269,7 @@ public class Universidad {
 				String turno = i.getTurno();
 				LocalDate inicioCurso = i.getCicloLectivo().getFechaInicio();
 				LocalDate finCurso = i.getCicloLectivo().getFechaFinalizacion();
-
+//			que no este cursando el mismo dia y mismo ciclo
 				if (dia.equals(curso.getDia()) && turno.equals(curso.getTurno())
 						&& inicioCurso.equals(curso.getCicloLectivo().getFechaInicio())
 						&& finCurso.equals(curso.getCicloLectivo().getFechaFinalizacion())) {
@@ -264,6 +281,58 @@ public class Universidad {
 		curso.sumarAlumnosInscriptos();
 		return asignacionesCursos.add(nuevaAsignacion);
 
+	}
+
+	private Boolean tieneCorrelativasAprobadas(Alumno alumno, Materia materia) {
+		ArrayList<Curso> cursosDelAlumno = this.buscarCursosDelAlumnoPorDni(alumno.getDni());
+		ArrayList<Materia> correlativas = materia.getCorrelativas();
+		ArrayList<Materia> correlativasAprobadas = new ArrayList<>();
+		for (Materia f : correlativas) {
+			for (Curso i : cursosDelAlumno)
+				if (i.getMateria().equals(f)) {
+					Boolean estaAprobada = this.estaAprobada(i, alumno);
+					if (estaAprobada)
+						correlativasAprobadas.add(f);
+				}
+		}
+		if(correlativasAprobadas.equals(correlativas)) {
+			return true;
+		}
+		return false;
+	}
+
+	private Boolean estaAprobada(Curso curso, Alumno alumno) {
+		AsignacionAlumnoCurso Asignacion = this.buscarAsignacionConCursoYAlumno(curso, alumno);
+		ArrayList<Nota> notas = Asignacion.getNotas();
+		Boolean Parcial1 = false;
+		Boolean Parcial2 = false;
+		Boolean RecParcial1 = false;
+		Boolean RecParcial2 = false;
+		for (Nota i : notas) {
+			if (i.getExamen().equals(ListaExamenes.PRIMER_PARCIAL) && i.getValor() >= 4) {
+				Parcial1 = true;
+			}
+			if (i.getExamen().equals(ListaExamenes.SEGUNDO_PARCIAL) && i.getValor() >= 4) {
+				Parcial2 = true;
+			}
+			if (i.getExamen().equals(ListaExamenes.REC_PRIMER_PARCIAL) && i.getValor() >= 4) {
+				RecParcial1 = true;
+			}
+			if (i.getExamen().equals(ListaExamenes.REC_SEGUNDO_PARCIAL) && i.getValor() >= 4) {
+				RecParcial2 = true;
+			}
+		}
+		if ((Parcial1 && Parcial2) || (Parcial1 && RecParcial2) || (RecParcial1 && Parcial2)) {
+			return true;
+		}
+		return false;
+	}
+
+	private Boolean materiaTieneCorrelativas(Materia materia) {
+		Boolean tieneCorrelativas = false;
+		if (!materia.getCorrelativas().isEmpty())
+			tieneCorrelativas = true;
+		return tieneCorrelativas;
 	}
 
 	private ArrayList<Curso> buscarCursosDelAlumnoPorDni(Integer dni) {
@@ -287,9 +356,9 @@ public class Universidad {
 		Alumno alumno = this.buscarAlumnoPorDni(dniAlumno);
 		AsignacionAlumnoCurso asignacion = this.buscarAsignacionConCursoYAlumno(curso, alumno);
 		Boolean tieneValorValido = this.NotaTieneValorValido(notaAAsignar);
-		if(!tieneValorValido)
+		if (!tieneValorValido)
 			return false;
-		
+
 		asignacion.agregarNota(notaAAsignar);
 		return true;
 	}

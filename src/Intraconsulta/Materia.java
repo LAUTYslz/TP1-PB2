@@ -42,40 +42,26 @@ public class Materia {
 	public void setCorrelativas(ArrayList<Materia> correlativas) {
 		this.correlativas = correlativas;
 	}
-	
-	@Override
-	public boolean equals(Object obj) {
-	    if (this == obj) {
-	        return true;
-	    }
-	    if (obj == null || getClass() != obj.getClass()) {
-	        return false;
-	    }
-	    Materia materia = (Materia) obj;
-	    return nombre.equals(materia.nombre);
-	}
 
 	@Override
 	public int hashCode() {
-	    return Objects.hash(nombre);
+		return Objects.hash(Id, nombre);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Materia other = (Materia) obj;
+		return Objects.equals(Id, other.Id) && Objects.equals(nombre, other.nombre);
 	}
 	
-//	public boolean agregarCorrelativa(Materia materia) {
-//		if(this.correlativas.contains(materia)||materia.equals(this)) {
-//			return false;
-//		}
-//		return this.correlativas.add(materia);
-//	}
+	
 
-//	public boolean eliminarCorrelativa(String nombre) {
-//		for(Materia i: correlativas) {
-//			if(i.getNombre().equals(nombre)) {
-//				this.correlativas.remove(i);
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
 
 
 	

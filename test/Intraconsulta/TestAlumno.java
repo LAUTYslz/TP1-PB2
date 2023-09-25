@@ -25,7 +25,7 @@ public class TestAlumno {
 	}
 	
 	@Test
-	public void queSePuedaAgregarUnAlumno() {
+	public void queSePuedaAgregarUnAlumnoAUnCurso() {
 		Integer dni = 222;
 		String nombre= "Lautaro";
 		String apellido= "Salazar";
@@ -211,11 +211,12 @@ public class TestAlumno {
 	@Test
 	public void NoSepUedeInscribirUnAlumnoSiNoTieneAprobadasLasCorrelativas() {
 //	Nota
-		Integer valor = 10;
+		Integer valor1 = 7;
+		Integer valor2 =3;		
 		ListaExamenes primerParcial = ListaExamenes.PRIMER_PARCIAL;
-		Nota nota1 = new Nota(valor, primerParcial);
+		Nota nota1 = new Nota(valor1, primerParcial);
 		ListaExamenes SegundoParcial = ListaExamenes.SEGUNDO_PARCIAL;
-		Nota nota2 = new Nota(valor, SegundoParcial);
+		Nota nota2 = new Nota(valor2, SegundoParcial);
 //	Alumno
 		Integer dni = 222;
 		String nombre= "Lautaro";
@@ -264,8 +265,9 @@ public class TestAlumno {
 		
 //		VERIFICACION
 		assertTrue(unlam.inscribirAlumnoACurso(nuevoCurso.getId(), dni));
-		assertTrue(unlam.inscribirAlumnoACurso(nuevoCurso2.getId(), dni));
 		assertTrue(unlam.registrarNota(nuevoCurso.getId(),nuevoAlumno.getDni(),nota1));
 		assertTrue(unlam.registrarNota(nuevoCurso.getId(),nuevoAlumno.getDni(),nota2));
+		assertTrue(materia2.getCorrelativas().contains(materia));
+		assertFalse(unlam.inscribirAlumnoACurso(nuevoCurso2.getId(), dni));
 	}
 }
