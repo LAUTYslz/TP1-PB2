@@ -386,11 +386,28 @@ public class Universidad {
 	public Boolean registrarNota(Integer idCurso, Integer dniAlumno, Nota notaAAsignar) {
 		AsignacionAlumnoCurso asignacion = this.buscarAsignacionConCursoYAlumno(idCurso, dniAlumno);
 		Boolean tieneValorValido = this.NotaTieneValorValido(notaAAsignar);
-		if (!tieneValorValido)
+		Boolean yaExisteNotaParaEseParcial = this.notaYaAsignadaAEsteParcial(asignacion,notaAAsignar);
+		if (!tieneValorValido) {
 			return false;
-
+		}
+		if(yaExisteNotaParaEseParcial) {
+			return false;
+		}
 		asignacion.agregarNota(notaAAsignar);
 		return true;
+	}
+
+	private Boolean notaYaAsignadaAEsteParcial(AsignacionAlumnoCurso asignacion, Nota notaAAsignar) {
+		ListaExamenes examen = notaAAsignar.getExamen();
+		ArrayList<Nota> notasCargadas = asignacion.getNotas();
+		for(Nota i: notasCargadas) {
+			if(i.getExamen().equals(examen)) {
+				return true;
+			}
+		}
+		
+
+		return false;
 	}
 
 	private Boolean NotaTieneValorValido(Nota nota) {
