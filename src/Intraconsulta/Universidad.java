@@ -92,7 +92,7 @@ public class Universidad {
 	}
 
 	public Boolean registrarAlumno(Alumno nuevoAlumno) {
-		if (nuevoAlumno==null) {
+		if (nuevoAlumno == null) {
 			return false;
 		}
 		if (buscarAlumnoPorDni(nuevoAlumno.getDni()) == null)
@@ -113,10 +113,10 @@ public class Universidad {
 	}
 
 	public boolean registraMateria(Materia materia) {
-		if (materia==null) {
+		if (materia == null) {
 			return false;
 		}
-		
+
 		for (Materia existeMateria : materias) {
 			if (existeMateria.getNombre().equals(materia.getNombre())) {
 				return false; // La materia con el mismo nombre ya existe
@@ -136,7 +136,7 @@ public class Universidad {
 	}
 
 	public Boolean agregarProfesor(Profesor profesor) {
-		if (profesor==null) {
+		if (profesor == null) {
 			return false;
 		}
 		for (Profesor i : profesoresInscriptos)
@@ -148,7 +148,7 @@ public class Universidad {
 	}
 
 	public Boolean agregarCicloLectivo(CicloLectivo nuevoCiclo) {
-		if (nuevoCiclo==null) {
+		if (nuevoCiclo == null) {
 			return false;
 		}
 		for (CicloLectivo i : ciclosLectivos) {
@@ -194,7 +194,7 @@ public class Universidad {
 	}
 
 	public Boolean agregarAula(Aula aula) {
-		if (aula==null) {
+		if (aula == null) {
 			return false;
 		}
 		return this.aulas.add(aula);
@@ -259,7 +259,7 @@ public class Universidad {
 		Alumno alumno = this.buscarAlumnoPorDni(dni);
 		Curso curso = this.buscarCursoPorId(idCurso);
 //		Hay que hacer un if es nulo (el curso no pertenece a la universidad)
-			
+
 		if (curso == null || alumno == null) {
 			return false;
 //			que alumno y curso este de alta
@@ -297,8 +297,8 @@ public class Universidad {
 		}
 //		que no este cursando el mismo dia y mismo ciclo
 		Materia materia = curso.getMateria();
-		Boolean yaLaAprobo = this.yaAproboEstaMateria(materia,dni);
-		if(yaLaAprobo) {
+		Boolean yaLaAprobo = this.yaAproboEstaMateria(materia, dni);
+		if (yaLaAprobo) {
 			return false;
 		}
 //		que no la haya aprobado
@@ -310,7 +310,7 @@ public class Universidad {
 
 	private Boolean yaAproboEstaMateria(Materia materia, Integer dni) {
 		ArrayList<Materia> materiasAprobadas = this.materiasAprobadasDelAlumno(dni);
-		if(materiasAprobadas.contains(materia))
+		if (materiasAprobadas.contains(materia))
 			return true;
 		return false;
 	}
@@ -327,7 +327,7 @@ public class Universidad {
 						correlativasAprobadas.add(f);
 				}
 		}
-		if(correlativasAprobadas.equals(correlativas)) {
+		if (correlativasAprobadas.equals(correlativas)) {
 			return true;
 		}
 		return false;
@@ -387,15 +387,15 @@ public class Universidad {
 	public Boolean registrarNota(Integer idCurso, Integer dniAlumno, Nota notaAAsignar) {
 		AsignacionAlumnoCurso asignacion = this.buscarAsignacionConCursoYAlumno(idCurso, dniAlumno);
 		Boolean tieneValorValido = this.NotaTieneValorValido(notaAAsignar);
-		Boolean yaExisteNotaParaEseParcial = this.notaYaAsignadaAEsteParcial(asignacion,notaAAsignar);
-		Boolean yaHayOtroRecuperatorioCargado = this.hayNotaCargadaEnOtroRecuperatorio(asignacion,notaAAsignar);
+		Boolean yaExisteNotaParaEseParcial = this.notaYaAsignadaAEsteParcial(asignacion, notaAAsignar);
+		Boolean yaHayOtroRecuperatorioCargado = this.hayNotaCargadaEnOtroRecuperatorio(asignacion, notaAAsignar);
 		if (!tieneValorValido) {
 			return false;
 		}
-		if(yaExisteNotaParaEseParcial) {
+		if (yaExisteNotaParaEseParcial) {
 			return false;
 		}
-		if(yaHayOtroRecuperatorioCargado) {
+		if (yaHayOtroRecuperatorioCargado) {
 			return false;
 		}
 		asignacion.agregarNota(notaAAsignar);
@@ -405,14 +405,14 @@ public class Universidad {
 	private Boolean hayNotaCargadaEnOtroRecuperatorio(AsignacionAlumnoCurso asignacion, Nota notaAAsignar) {
 		ListaExamenes examen = notaAAsignar.getExamen();
 		ArrayList<Nota> notasCargadas = asignacion.getNotas();
-		if(examen.equals(ListaExamenes.REC_PRIMER_PARCIAL)||examen.equals(ListaExamenes.REC_SEGUNDO_PARCIAL)) {
-			for(Nota i: notasCargadas) {
-				if(i.getExamen().equals(ListaExamenes.REC_PRIMER_PARCIAL) || i.getExamen().equals(ListaExamenes.REC_SEGUNDO_PARCIAL) ) {
+		if (examen.equals(ListaExamenes.REC_PRIMER_PARCIAL) || examen.equals(ListaExamenes.REC_SEGUNDO_PARCIAL)) {
+			for (Nota i : notasCargadas) {
+				if (i.getExamen().equals(ListaExamenes.REC_PRIMER_PARCIAL)
+						|| i.getExamen().equals(ListaExamenes.REC_SEGUNDO_PARCIAL)) {
 					return true;
 				}
 			}
 		}
-		
 
 		return false;
 	}
@@ -420,12 +420,11 @@ public class Universidad {
 	private Boolean notaYaAsignadaAEsteParcial(AsignacionAlumnoCurso asignacion, Nota notaAAsignar) {
 		ListaExamenes examen = notaAAsignar.getExamen();
 		ArrayList<Nota> notasCargadas = asignacion.getNotas();
-		for(Nota i: notasCargadas) {
-			if(i.getExamen().equals(examen)) {
+		for (Nota i : notasCargadas) {
+			if (i.getExamen().equals(examen)) {
 				return true;
 			}
 		}
-		
 
 		return false;
 	}
@@ -446,7 +445,7 @@ public class Universidad {
 					return i;
 		return null;
 	}
-	
+
 	public ArrayList<Materia> materiasAprobadasDelAlumno(Integer dni) {
 		Alumno alumno = this.buscarAlumnoPorDni(dni);
 		ArrayList<Curso> cursosDelAlumno = this.buscarCursosDelAlumnoPorDni(alumno.getDni());
@@ -462,24 +461,24 @@ public class Universidad {
 		}
 		return materiasAprobadas;
 	}
-	
+
 	public ArrayList<Materia> materiasQueLeFaltaAprobarAlAlumno(Integer dni) {
 		ArrayList<Materia> materias = this.getMaterias();
 		ArrayList<Materia> materiasAprobadas = this.materiasAprobadasDelAlumno(dni);
 		ArrayList<Materia> materiasQueLeFaltaAprobar = new ArrayList<>();
-		if(materiasAprobadas.size()==0) {
+		if (materiasAprobadas.size() == 0) {
 			return materias;
 		}
 		for (Materia i : materias) {
-			for(Materia f : materiasAprobadas) {
-				if(!i.equals(f)) {
+			for (Materia f : materiasAprobadas) {
+				if (!i.equals(f)) {
 					materiasQueLeFaltaAprobar.add(i);
 				}
 			}
 		}
-	return materiasQueLeFaltaAprobar;
+		return materiasQueLeFaltaAprobar;
 	}
-	
+
 	public boolean inscribirProfesorACurso(Integer id, Integer dni) {
 		Profesor profe = this.buscarProfesorPorDni(dni);
 		Curso curso = this.buscarCursoPorId(id);
@@ -493,7 +492,7 @@ public class Universidad {
 		if (cantidadDeProfesoresEnCurso == cantidadDeProfesoresNecesarios) {
 			return false;
 		}
-		
+
 // que no pueda anotarse a otro curso el mismo dia, horario y ciclolectivo
 		ArrayList<Curso> cursosDelProfesor = this.buscarCursosDelProfesorPorDni(dni);
 		if (cursosDelProfesor != null) {
@@ -514,7 +513,7 @@ public class Universidad {
 		curso.sumarProfesoresInscriptos();
 		return asignacionesCursosProfe.add(nuevaAsignacion);
 	}
-	
+
 	private ArrayList<Curso> buscarCursosDelProfesorPorDni(Integer dni) {
 		ArrayList<Curso> cursosProf = new ArrayList<>();
 		for (AsignacionProfesorCurso i : asignacionesCursosProfe)
@@ -535,64 +534,95 @@ public class Universidad {
 	public void calcularPromedioDelAlumnoEnCursada(Integer dni, Integer idCurso) {
 		AsignacionAlumnoCurso asignacion = this.buscarAsignacionConCursoYAlumno(idCurso, dni);
 		ArrayList<Nota> notas = asignacion.getNotas();
-		Integer Promedio=0;
+		Integer Promedio = 0;
 		Double sumaDeNotas = 0.0;
 		Integer notaPrimerParcial = 0;
 		Integer notaSegundoParcial = 0;
 		Integer notaRecPrimerParcial = 0;
 		Integer notaRecSegundoParcial = 0;
-		
-		if(notas.size()==2) {
-			for(Nota i: notas) {
-				sumaDeNotas+=i.getValor();
+
+		if (notas.size() == 2) {
+			for (Nota i : notas) {
+				sumaDeNotas += i.getValor();
 			}
-			Promedio = (int)Math.round(sumaDeNotas/2);
+			Promedio = (int) Math.round(sumaDeNotas / 2);
 		}
-		
-		if (notas.size()==3) {
-			for(Nota i : notas) {
-				if(i.getExamen().equals(ListaExamenes.PRIMER_PARCIAL))
+
+		if (notas.size() == 3) {
+			for (Nota i : notas) {
+				if (i.getExamen().equals(ListaExamenes.PRIMER_PARCIAL))
 					notaPrimerParcial = i.getValor();
-				if(i.getExamen().equals(ListaExamenes.SEGUNDO_PARCIAL))
+				if (i.getExamen().equals(ListaExamenes.SEGUNDO_PARCIAL))
 					notaSegundoParcial = i.getValor();
-				if(i.getExamen().equals(ListaExamenes.REC_PRIMER_PARCIAL))
+				if (i.getExamen().equals(ListaExamenes.REC_PRIMER_PARCIAL))
 					notaRecPrimerParcial = i.getValor();
-				if(i.getExamen().equals(ListaExamenes.REC_SEGUNDO_PARCIAL))
+				if (i.getExamen().equals(ListaExamenes.REC_SEGUNDO_PARCIAL))
 					notaRecSegundoParcial = i.getValor();
-		}
-		
-			if(notaRecPrimerParcial == 0) {
-				sumaDeNotas =(double) (notaPrimerParcial + notaRecSegundoParcial);
-			}else if(notaRecSegundoParcial == 0){
+			}
+
+			if (notaRecPrimerParcial == 0) {
+				sumaDeNotas = (double) (notaPrimerParcial + notaRecSegundoParcial);
+			} else if (notaRecSegundoParcial == 0) {
 				sumaDeNotas = (double) (notaSegundoParcial + notaRecPrimerParcial);
 			}
-				Promedio = (int)Math.round(sumaDeNotas/2);
-	}
-			
+			Promedio = (int) Math.round(sumaDeNotas / 2);
+		}
+		if (notas.size() == 1) {
+			Promedio = 1;
+		}
+
 		asignacion.setPromedioFinal(Promedio);
-		
+
 	}
 
-	public ArrayList<Integer> buscarLaNotaFinalDelAlumno(Integer idMateria,Integer dni) {
+	public ArrayList<Integer> buscarLaNotaFinalDelAlumno(Integer idMateria, Integer dni) {
 		ArrayList<Curso> cursosDelAlumno = this.buscarCursosDelAlumnoPorDni(dni);
 		ArrayList<Integer> notaFinalDelCurso = new ArrayList<>();
-		for(Curso i:cursosDelAlumno) {
-			if(i.getMateria().getId().equals(idMateria)){
+		for (Curso i : cursosDelAlumno) {
+			if (i.getMateria().getId().equals(idMateria)) {
 				AsignacionAlumnoCurso asignacion = this.buscarAsignacionConCursoYAlumno(i.getId(), dni);
 				notaFinalDelCurso.add(asignacion.getPromedioFinal());
 			}
 		}
-		
+
 		return notaFinalDelCurso;
 	}
 
 	private AsignacionAlumnoCurso buscarAsignacionPorId(Integer id) {
-		for(AsignacionAlumnoCurso i: asignacionesCursosAlumno) {
-			if(i.getId().equals(id)) {
+		for (AsignacionAlumnoCurso i : asignacionesCursosAlumno) {
+			if (i.getId().equals(id)) {
 				return i;
 			}
 		}
 		return null;
+	}
+
+	public ArrayList<AsignacionAlumnoCurso> ObtenerReporteDeNotasDeAlumnosDeCurso(Integer idCurso) {
+		ArrayList<AsignacionAlumnoCurso> asignaciones = this.getAsignacionesCursos();
+		ArrayList<AsignacionAlumnoCurso> asignacionesDelCursoBuscado = new ArrayList<>();
+		Curso curso = this.buscarCursoPorId(idCurso);
+		if (curso != null) {
+			for (AsignacionAlumnoCurso i : asignaciones) {
+				if (i.getCurso().getId().equals(idCurso)) {
+					asignacionesDelCursoBuscado.add(i);
+				}
+			}
+		}
+		return asignacionesDelCursoBuscado;
+	}
+
+	public ArrayList<AsignacionAlumnoCurso> ObtenerListadoMateriasAprobadasParaUnAlumno(Integer dni) {
+		Alumno alumno = this.buscarAlumnoPorDni(dni);
+		ArrayList<AsignacionAlumnoCurso> asignaciones = this.getAsignacionesCursos();
+		ArrayList<Materia> materiasAprobadasDelAlumno = this.materiasAprobadasDelAlumno(dni);
+		ArrayList<AsignacionAlumnoCurso> asignacionesDelAlumnoConMateriaAprobada = new ArrayList<>();
+		for (AsignacionAlumnoCurso i : asignaciones) {
+			for (Materia f : materiasAprobadasDelAlumno)
+				if (i.getCurso().getMateria().equals(f) && this.estaAprobada(i.getCurso(), alumno)
+						&& i.getAlumno().getDni().equals(dni))
+					asignacionesDelAlumnoConMateriaAprobada.add(i);
+		}
+		return asignacionesDelAlumnoConMateriaAprobada;
 	}
 
 }
