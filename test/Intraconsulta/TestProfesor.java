@@ -87,7 +87,7 @@ public class TestProfesor {
 		LocalDate fechaInicio = LocalDate.parse("2023-09-14");
 		LocalDate fechaFinalizacion = LocalDate.parse("2023-12-31");
 		LocalDate fechaInicioInscripcion = LocalDate.parse("2023-09-13");
-		LocalDate fechaFinalizacionInscripcion = LocalDate.parse("2023-10-15");
+		LocalDate fechaFinalizacionInscripcion = LocalDate.parse("2023-12-15");
 		CicloLectivo nuevoCicloLectivo = new CicloLectivo(fechaInicio, fechaFinalizacion, fechaInicioInscripcion,fechaFinalizacionInscripcion);
 		unlam.agregarCicloLectivo(nuevoCicloLectivo);
 	
@@ -146,7 +146,7 @@ public class TestProfesor {
 		LocalDate fechaInicio = LocalDate.parse("2023-09-14");
 		LocalDate fechaFinalizacion = LocalDate.parse("2023-12-31");
 		LocalDate fechaInicioInscripcion = LocalDate.parse("2023-09-13");
-		LocalDate fechaFinalizacionInscripcion = LocalDate.parse("2023-10-15");
+		LocalDate fechaFinalizacionInscripcion = LocalDate.parse("2023-12-15");
 		CicloLectivo nuevoCicloLectivo = new CicloLectivo(fechaInicio, fechaFinalizacion, fechaInicioInscripcion,fechaFinalizacionInscripcion);
 		unlam.agregarCicloLectivo(nuevoCicloLectivo);
 	
@@ -205,7 +205,7 @@ public class TestProfesor {
 		LocalDate fechaInicio = LocalDate.parse("2023-09-14");
 		LocalDate fechaFinalizacion = LocalDate.parse("2023-12-31");
 		LocalDate fechaInicioInscripcion = LocalDate.parse("2023-09-13");
-		LocalDate fechaFinalizacionInscripcion = LocalDate.parse("2023-10-15");
+		LocalDate fechaFinalizacionInscripcion = LocalDate.parse("2023-12-15");
 		CicloLectivo nuevoCicloLectivo = new CicloLectivo(fechaInicio, fechaFinalizacion, fechaInicioInscripcion,fechaFinalizacionInscripcion);
 		unlam.agregarCicloLectivo(nuevoCicloLectivo);
 	

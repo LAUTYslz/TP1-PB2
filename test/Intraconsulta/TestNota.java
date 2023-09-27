@@ -36,7 +36,7 @@ public class TestNota {
 	
 //	NOTA-AsigancionAlumnoAcurso////////////////////////////////////////////////////////////
 	@Test
-	public void QueSePuedaRegistratUnaNota() {
+	public void QueSePuedaRegistrarUnaNota() {
 //	Nota
 		Integer valor = 7;
 		ListaExamenes examen = ListaExamenes.PRIMER_PARCIAL;
@@ -60,7 +60,7 @@ public class TestNota {
 		LocalDate fechaInicio = LocalDate.parse("2023-09-14");
 		LocalDate fechaFinalizacion = LocalDate.parse("2023-12-31");
 		LocalDate fechaInicioInscripcion = LocalDate.parse("2023-09-13");
-		LocalDate fechaFinalizacionInscripcion = LocalDate.parse("2023-10-15");
+		LocalDate fechaFinalizacionInscripcion = LocalDate.parse("2023-12-15");
 		CicloLectivo nuevoCicloLectivo = new CicloLectivo(fechaInicio, fechaFinalizacion, fechaInicioInscripcion,fechaFinalizacionInscripcion);
 //	Curso
 		String dia = "lunes";
@@ -105,7 +105,7 @@ public class TestNota {
 		LocalDate fechaInicio = LocalDate.parse("2023-09-14");
 		LocalDate fechaFinalizacion = LocalDate.parse("2023-12-31");
 		LocalDate fechaInicioInscripcion = LocalDate.parse("2023-09-13");
-		LocalDate fechaFinalizacionInscripcion = LocalDate.parse("2023-10-15");
+		LocalDate fechaFinalizacionInscripcion = LocalDate.parse("2023-12-15");
 		CicloLectivo nuevoCicloLectivo = new CicloLectivo(fechaInicio, fechaFinalizacion, fechaInicioInscripcion,fechaFinalizacionInscripcion);
 //	Curso
 		String dia = "lunes";

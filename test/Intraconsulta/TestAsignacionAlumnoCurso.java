@@ -37,7 +37,7 @@ public class TestAsignacionAlumnoCurso {
 		LocalDate fechaInicio = LocalDate.parse("2023-09-14");
 		LocalDate fechaFinalizacion = LocalDate.parse("2023-12-31");
 		LocalDate fechaInicioInscripcion = LocalDate.parse("2023-09-13");
-		LocalDate fechaFinalizacionInscripcion = LocalDate.parse("2023-10-15");
+		LocalDate fechaFinalizacionInscripcion = LocalDate.parse("2023-12-15");
 		CicloLectivo nuevoCicloLectivo = new CicloLectivo(fechaInicio, fechaFinalizacion, fechaInicioInscripcion,fechaFinalizacionInscripcion);
 //	Curso
 		String dia = "lunes";
@@ -93,7 +93,7 @@ public class TestAsignacionAlumnoCurso {
 		LocalDate fechaInicio = LocalDate.parse("2023-09-14");
 		LocalDate fechaFinalizacion = LocalDate.parse("2023-12-31");
 		LocalDate fechaInicioInscripcion = LocalDate.parse("2023-09-13");
-		LocalDate fechaFinalizacionInscripcion = LocalDate.parse("2023-10-15");
+		LocalDate fechaFinalizacionInscripcion = LocalDate.parse("2023-12-15");
 		CicloLectivo nuevoCicloLectivo = new CicloLectivo(fechaInicio, fechaFinalizacion, fechaInicioInscripcion,fechaFinalizacionInscripcion);
 //	Curso
 		String dia = "lunes";
@@ -148,7 +148,7 @@ public class TestAsignacionAlumnoCurso {
 		LocalDate fechaInicio = LocalDate.parse("2023-09-14");
 		LocalDate fechaFinalizacion = LocalDate.parse("2023-12-31");
 		LocalDate fechaInicioInscripcion = LocalDate.parse("2023-09-13");
-		LocalDate fechaFinalizacionInscripcion = LocalDate.parse("2023-10-15");
+		LocalDate fechaFinalizacionInscripcion = LocalDate.parse("2023-12-15");
 		CicloLectivo nuevoCicloLectivo = new CicloLectivo(fechaInicio, fechaFinalizacion, fechaInicioInscripcion,fechaFinalizacionInscripcion);
 //	Curso
 		String dia = "lunes";
@@ -201,7 +201,7 @@ public class TestAsignacionAlumnoCurso {
 		LocalDate fechaInicio = LocalDate.parse("2023-09-14");
 		LocalDate fechaFinalizacion = LocalDate.parse("2023-12-31");
 		LocalDate fechaInicioInscripcion = LocalDate.parse("2023-09-13");
-		LocalDate fechaFinalizacionInscripcion = LocalDate.parse("2023-10-15");
+		LocalDate fechaFinalizacionInscripcion = LocalDate.parse("2023-12-15");
 		CicloLectivo nuevoCicloLectivo = new CicloLectivo(fechaInicio, fechaFinalizacion, fechaInicioInscripcion,fechaFinalizacionInscripcion);
 //	Curso
 		String dia = "lunes";
@@ -257,7 +257,7 @@ public class TestAsignacionAlumnoCurso {
 		LocalDate fechaInicio = LocalDate.parse("2023-09-14");
 		LocalDate fechaFinalizacion = LocalDate.parse("2023-12-31");
 		LocalDate fechaInicioInscripcion = LocalDate.parse("2023-09-13");
-		LocalDate fechaFinalizacionInscripcion = LocalDate.parse("2023-10-15");
+		LocalDate fechaFinalizacionInscripcion = LocalDate.parse("2023-12-15");
 		CicloLectivo nuevoCicloLectivo = new CicloLectivo(fechaInicio, fechaFinalizacion, fechaInicioInscripcion,fechaFinalizacionInscripcion);
 //	Curso
 		String dia = "lunes";
@@ -406,12 +406,12 @@ public class TestAsignacionAlumnoCurso {
 		LocalDate fechaInicio = LocalDate.parse("2023-03-14");
 		LocalDate fechaFinalizacion = LocalDate.parse("2023-06-30");
 		LocalDate fechaInicioInscripcion = LocalDate.parse("2023-03-13");
-		LocalDate fechaFinalizacionInscripcion = LocalDate.parse("2023-10-15");
+		LocalDate fechaFinalizacionInscripcion = LocalDate.parse("2023-12-15");
 		CicloLectivo nuevoCicloLectivo = new CicloLectivo(fechaInicio, fechaFinalizacion, fechaInicioInscripcion,fechaFinalizacionInscripcion);
 		LocalDate fechaInicio2 = LocalDate.parse("2023-09-14");
 		LocalDate fechaFinalizacion2 = LocalDate.parse("2023-12-31");
 		LocalDate fechaInicioInscripcion2 = LocalDate.parse("2023-09-13");
-		LocalDate fechaFinalizacionInscripcion2 = LocalDate.parse("2023-10-15");
+		LocalDate fechaFinalizacionInscripcion2 = LocalDate.parse("2023-12-15");
 		CicloLectivo nuevoCicloLectivo2 = new CicloLectivo(fechaInicio2, fechaFinalizacion2, fechaInicioInscripcion2,fechaFinalizacionInscripcion2);
 //	Curso
 		String dia = "lunes";
@@ -487,7 +487,7 @@ public class TestAsignacionAlumnoCurso {
 		LocalDate fechaInicio = LocalDate.parse("2023-03-14");
 		LocalDate fechaFinalizacion = LocalDate.parse("2023-06-30");
 		LocalDate fechaInicioInscripcion = LocalDate.parse("2023-03-13");
-		LocalDate fechaFinalizacionInscripcion = LocalDate.parse("2023-10-15");
+		LocalDate fechaFinalizacionInscripcion = LocalDate.parse("2023-12-15");
 		CicloLectivo nuevoCicloLectivo = new CicloLectivo(fechaInicio, fechaFinalizacion, fechaInicioInscripcion,fechaFinalizacionInscripcion);
 //	Curso
 		String dia = "lunes";
@@ -567,7 +567,7 @@ public class TestAsignacionAlumnoCurso {
 		LocalDate fechaInicio = LocalDate.parse("2023-03-14");
 		LocalDate fechaFinalizacion = LocalDate.parse("2023-06-30");
 		LocalDate fechaInicioInscripcion = LocalDate.parse("2023-03-13");
-		LocalDate fechaFinalizacionInscripcion = LocalDate.parse("2023-10-15");
+		LocalDate fechaFinalizacionInscripcion = LocalDate.parse("2023-12-15");
 		CicloLectivo nuevoCicloLectivo = new CicloLectivo(fechaInicio, fechaFinalizacion, fechaInicioInscripcion,fechaFinalizacionInscripcion);
 //	Curso
 		String dia = "lunes";
