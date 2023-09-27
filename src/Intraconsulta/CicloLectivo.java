@@ -105,4 +105,13 @@ public class CicloLectivo {
 				&& Objects.equals(fechaInicioInscripcion, other.fechaInicioInscripcion);
 	}
 
+
+
+	@Override
+	public String toString() {
+		return "CicloLectivo [fechaInicio=" + fechaInicio + ", fechaFinalizacion=" + fechaFinalizacion + "]";
+	}
+	
+	
+
 }
