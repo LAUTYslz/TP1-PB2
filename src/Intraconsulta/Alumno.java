@@ -10,6 +10,7 @@ public class Alumno {
 	private String apellido;
 //	private LocalDate FechaNacimiento;
 	private LocalDate FechaNacimiento;
+	private LocalDate FechaDeIngreso;
 
 //	public static DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 
@@ -58,6 +59,14 @@ public class Alumno {
 
 	public void setFechaNacimiento(LocalDate fechaNacimiento) {
 		FechaNacimiento = fechaNacimiento;
+	}
+	
+	public LocalDate getFechaDeIngreso() {
+		return FechaDeIngreso;
+	}
+
+	public void setFechaDeIngreso(LocalDate fechaDeIngreso) {
+		FechaDeIngreso = fechaDeIngreso;
 	}
 
 	@Override

@@ -95,10 +95,10 @@ public class Universidad {
 		if (nuevoAlumno == null) {
 			return false;
 		}
-		if (buscarAlumnoPorDni(nuevoAlumno.getDni()) == null)
-
+		if (buscarAlumnoPorDni(nuevoAlumno.getDni()) == null) {
+			nuevoAlumno.setFechaDeIngreso(LocalDate.now());
 			return this.alumnosInscriptos.add(nuevoAlumno);
-
+		}
 		return false;
 
 	}
